@@ -1,0 +1,1317 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PaymentApi</name>
+    </assembly>
+    <members>
+        <member name="T:PaymentApi.Configuration.AlfaBankSettings">
+            <summary>
+            Настройки для работы с SBC-терминалами
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Configuration.AlfaBankSettings.MerchantControlKey">
+            <summary>
+            Секретный ключ для доступа к терминалам (передается в модель)
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Configuration.AlfaBankSettings.ConsumerKey">
+            <summary>
+            Логин для авторизации при запросах
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Configuration.AlfaBankSettings.AlfaGatewayUrl">
+            <summary>
+            Адрес хоста SBC
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Configuration.AlfaBankSettings.PathPrivateKey">
+            <summary>
+            Путь до расположения ключа для запроса OAuth
+            </summary>
+        </member>
+        <member name="F:PaymentApi.Configuration.AlfaBankSettings.pathConfig">
+            <summary>
+            Фабрика для получения различных вариантов пути.
+            <br/>Используется для получения текущей рабочей диркетории на сервере
+            </summary>
+        </member>
+        <member name="T:PaymentApi.Configuration.AppSettings">
+            <summary>
+            Объект настроек приложений
+            <br/>Сюда добавляем поля, если правится application.json
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Configuration.AppSettings.Secret">
+            <summary>
+            Секретный ключ, который используется при создании JWT для авторизованного доступа
+            </summary>
+        </member>
+        <member name="T:PaymentApi.Configuration.PathConfigurator">
+            <summary>
+            Конфигуратор путей в директории приложения
+            <br/>Пример <see cref="P:PaymentApi.Configuration.AlfaBankSettings.PathPrivateKey"/>
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Configuration.PathConfigurator.Path">
+            <summary>
+            Переменная пути
+            </summary>
+        </member>
+        <member name="F:PaymentApi.Configuration.PathConfigurator.Factory">
+            <summary>
+            Instance фабрики для конструирования пути
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Configuration.PathConfigurator.#ctor(System.String)">
+            <summary>
+            Приватный конструктор для создания объекта пути только через фабрику
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="T:PaymentApi.Configuration.PathConfigurator.PathFactory">
+            <summary>
+            Фабрика для конструирования пути
+            <br/>Пример использования: <see cref="F:PaymentApi.Configuration.AlfaBankSettings.pathConfig"/>
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Configuration.PathConfigurator.PathFactory.GetPathCurrentDomain(System.String)">
+            <summary>
+            Получение пути от корневой директории на сервере
+            </summary>
+            <param name="PartOfPath">Относительный от корневой директории путь</param>
+            <returns>Объект конфигуратора пути</returns>
+        </member>
+        <member name="T:PaymentApi.Configuration.TinkoffTestSettings">
+            <summary>
+            Тинькофф настройки для тестирования алгоритмов
+            <br/>Пример: <seealso cref="F:PaymentApi.Controllers.TinkoffBindTestController.tinkoffTestSettings"/>
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Configuration.TinkoffTestSettings.TinkoffE2CTerminalKey">
+            <summary>
+            Код E2C терминала Тинькофф
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Configuration.TinkoffTestSettings.TinkoffRebillTerminalKey">
+            <summary>
+            Код Rebill терминала
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Configuration.TinkoffTestSettings.TinkoffTerminalKey">
+            <summary>
+            Код терминала для оплаты через форму на сайте Тинькофф-банка
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Configuration.TinkoffTestSettings.TinkoffRebillTerminalPassword">
+            <summary>
+            Пароль от Rebill-терминала
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Configuration.TinkoffTestSettings.TinkoffTerminalPassword">
+            <summary>
+            Пароль от терминала для оплаты через форму
+            </summary>
+        </member>
+        <member name="T:PaymentApi.Configuration.TinkoffSettings">
+            <summary>
+            Базовый класс настроек Тинькофф-банка
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Configuration.TinkoffSettings.PfxPath">
+            <summary>
+            Путь до расположения pfx-контейнера ключа Тинькофф
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Configuration.TinkoffSettings.PfxPassword">
+            <summary>
+            Пароль от pfx-контейнера ключа
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Configuration.TinkoffSettings.TinkoffCertSerial">
+            <summary>
+            Серийный номер сертификата Тинькофф
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Configuration.TinkoffSettings.TinkoffGatewayUrl">
+            <summary>
+            Адрес хоста (шлюза) 
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Configuration.TinkoffSettings.Version">
+            <summary>
+            Версия реализации
+            </summary>
+            <remarks>
+            Есть две версии реализации алгоритмов:
+            <br/>Обе версии возвращают Json-объект
+            <list type="table">
+            <item>
+            <term>0-версия</term>
+            <description>
+            Адрес запроса выглядит так:
+            <br/> http://securepayments.tinkoff.ru/e2c/MethodName/ - E2C-терминал
+            <br/> http://securepayments.tinkoff.ru/MethodName/ - EACQ-терминал
+            <br/> Суть версии в том, что она принимает UrlEncoded-параметры 
+            </description>
+            </item>
+            <item>
+            <term>v2-версия</term>
+            <description>
+            Адрес запроса выглядит так:
+            <br/> http://securepayments.tinkoff.ru/e2c/v2/MethodName/ - E2C-терминал
+            <br/> http://securepayments.tinkoff.ru/v2/MethodName/ - EACQ-терминал
+            <br/> V2-версия принимает Json-объекты
+            </description>
+            </item>
+            </list>
+            Реализации этих версий есть тут: 
+            <br/><seealso cref="T:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBankTransaction"/>
+            <br/><seealso cref="T:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBankV2Transaction"/>
+            <para>
+            Разграничение по версиям происходит через <see cref="T:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffTransactionFactory"/>
+            </para>
+            <para>
+            Пример работы есть в Тинькофф-контроллерах (при изменении версии в конфиге, будет меняться способ отправки запроса и обработки ответа)
+            <br/><see cref="M:PaymentApi.Controllers.TinkoffBindController.SendRequest(PaymentClassLibrary.Utils.IModel,System.String)"/>
+            </para>
+            </remarks>
+        </member>
+        <member name="F:PaymentApi.Configuration.TinkoffSettings.pathConfig">
+            <summary>
+            Фабрика для получения различных вариантов пути.
+            <br/>Используется для получения текущей рабочей диркетории на сервере
+            </summary>
+        </member>
+        <member name="T:PaymentApi.Controllers.AccountController">
+            <summary>
+            Контроллер для создания пользователей сервиса
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Controllers.AccountController.#ctor(PaymentApi.Services.IUserService,PaymentApi.Services.IRegisterService)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="userService">Контейнер для получения пользователей и создания токенов</param>
+            <param name="registerService">Контейнер для регистрации пользователей в системе</param>
+        </member>
+        <member name="M:PaymentApi.Controllers.AccountController.Register(PaymentApi.Models.RegistrationRequest)">
+            <summary>
+            Создание пользователя сервиса. Вызывается только локально либо с определенного IP
+            <br/>Использование следующее: сами создаем пользователя, после чего отдаем ему данные логин и пароль
+            </summary>
+            <param name="model">Данные пользователя</param>
+            <response code="200">Результат добавления пользователя в БД</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.AccountController.Auth(PaymentApi.Models.AuthenticateRequest)">
+            <summary>
+            Аутентификация (создание токена)
+            </summary>
+            <param name="model">Данные полученные после регистрации</param>
+            <response code="200">Возвращается токен JWT и имя пользователя</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="T:PaymentApi.Controllers.AlfaBankCallbackController">
+            <summary>
+            Контроллер для работы c нотификациями (callback) от АльфаБанка (по сути SBC)
+            </summary>
+            <remarks>
+            В appsettings.json добавлены параметры для назначения CallbackUrl для каждой обработки нотификации
+            <para>
+            TODO: для контроллера нотификаций SBC
+            <br/>1. Описать логику обработки нотификации
+            <br/>2. Обработать параметры в appsettings.json, чтобы нотификации после транзакции приходили правильно
+            </para>
+            </remarks>
+        </member>
+        <member name="M:PaymentApi.Controllers.AlfaBankCallbackController.CardRegistrationCallback(System.String)">
+            <summary>
+            Обработка нотификации после привязки карты
+            </summary>
+            <param name="typeProcess">Этап процесса</param>
+            <response code="200">Результат обработки запроса</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.AlfaBankCallbackController.SaleTransactionCallback(System.String)">
+            <summary>
+            Обработка нотификации после оплаты клиентом через платежную форму
+            </summary>
+            <param name="typeProcess">Этап процесса</param>
+            <response code="200">Результат обработки запроса</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.AlfaBankCallbackController.TransferMoneyCallback(System.String)">
+            <summary>
+            Обработка нотификации после перевода денег
+            </summary>
+            <param name="typeProcess">Этап процесса</param>
+            <response code="200">Результат обработки запроса</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.AlfaBankCallbackController.ReccurentTransactionCallback(System.String)">
+            <summary>
+            Обработка нотификации после рекуррентного списания
+            </summary>
+            <param name="typeProcess">Этап процесса</param>
+            <response code="200">Результат обработки запроса</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="T:PaymentApi.Controllers.AlfaBankController">
+            <summary>
+            Контроллер для работы с алгоритмами SBC
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Controllers.AlfaBankController.#ctor(PaymentClassLibrary.Transport.GatewayClient,Microsoft.Extensions.Options.IOptions{PaymentApi.Configuration.AlfaBankSettings})">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="client">Объект для отправки запросов</param>
+            <param name="settings">Настройки из конфигурационного файла</param>
+        </member>
+        <member name="M:PaymentApi.Controllers.AlfaBankController.SendRequest(PaymentClassLibrary.Utils.IModel,PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankMethod)">
+            <summary>
+            Метод-помощник для отправки запроса, чтобы не дублировать код
+            </summary>
+            <param name="data">Модель данных</param>
+            <param name="method">Объект метода (в нем название и номер терминала)</param>
+        </member>
+        <member name="M:PaymentApi.Controllers.AlfaBankController.Preauth(PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData)">
+            <summary>
+            Предварительная аутентификация
+            </summary>
+            <param name="data"></param>
+            <response code="200">Результат обработки запроса</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.AlfaBankController.CreateCardRef(PaymentClassLibrary.TransactionsModels.AlfaBank.CardRegistrationData)">
+            <summary>
+            Создание идентификатора привязки карты (предварительно необходимо выполнить Preauth)
+            </summary>
+            <param name="data"></param>
+            <response code="200">Результат обработки запроса</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.AlfaBankController.Return(PaymentClassLibrary.TransactionsModels.AlfaBank.RetrunTransactionData)">
+            <summary>
+            Транзакция для возврата холдирования (после CreateCardRef)
+            </summary>
+            <param name="data"></param>
+            <response code="200">Результат обработки запроса</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.AlfaBankController.Sale(PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData)">
+            <summary>
+            Транзакция оплаты через платежную форму
+            </summary>
+            <param name="data"></param>
+            <response code="200">Результат обработки запроса</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.AlfaBankController.Reccurent(PaymentClassLibrary.TransactionsModels.AlfaBank.ReccurentTranData)">
+            <summary>
+            Транзакции рекуррентного списания
+            </summary>
+            <param name="data"></param>
+            <response code="200">Результат обработки запроса</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.AlfaBankController.Status(PaymentClassLibrary.TransactionsModels.AlfaBank.StatusData,System.String)">
+            <summary>
+            Транзакция статуса транзакции
+            </summary>
+            <param name="data"></param>
+            <param name="apiMethod"></param>
+            <response code="200">Результат обработки запроса</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.AlfaBankController.TransferMoney(PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData)">
+            <summary>
+            Перевод денег на карту клиенту
+            </summary>
+            <param name="data"></param>
+            <response code="200">Результат обработки запроса</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="T:PaymentApi.Controllers.CheckController">
+            <summary>
+            Контроллер по умолчанию при создании проекта
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Controllers.CheckController.#ctor(PaymentApi.DbLogger.ILogRepository)">
+            <summary>
+            Конструктор
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Controllers.CheckController.Get(System.Int32)">
+            <summary>
+            Метод Get
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Controllers.CheckController.GetTinkoffSettings">
+            <summary>
+            Метод GetTinkoffSettings
+            </summary>
+        </member>
+        <member name="T:PaymentApi.Controllers.TinkoffBindTestController">
+            <summary>
+            Тестовый контроллер для отладки алгоритмов E2C-протокола
+            <br/>Настройки берутся из TinkoffTestSettings в appsettings.json
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBindTestController.#ctor(PaymentClassLibrary.Transport.GatewayClient)">
+            <summary>
+            Конструктор контроллера
+            </summary>
+            <param name="client">Клиент для отправки запросов</param>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBindTestController.AddCustomer(PaymentClassLibrary.TransactionsModels.Tinkoff.AddCustomerData)">
+            <summary>
+            Добавление покупателя в систему банка
+            </summary>
+            <remarks>Добавление покупателя в систему банка</remarks>
+            <param name="data">Данные покупателя</param>
+            <response code="200">Покупатель добавлен в систему банка</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBindTestController.GetCustomer(PaymentClassLibrary.TransactionsModels.Tinkoff.CustomerData)">
+            <summary>
+            Получение данных покупателя из системы банка
+            </summary>
+            <param name="data">Данные покупателя</param>
+            <response code="200">Получены данные покупателя от банка</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBindTestController.RemoveCustomer(PaymentClassLibrary.TransactionsModels.Tinkoff.CustomerData)">
+            <summary>
+            Удаление покупателя
+            </summary>
+            <param name="data">Данные покупателя</param>
+            <response code="200">Покупатель удален из системы банка</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBindTestController.AddCard(PaymentClassLibrary.TransactionsModels.Tinkoff.AddCardData)">
+            <summary>
+            Добавление карты для покупателя в систему банка
+            </summary>
+            <param name="data">Данные карты</param>
+            <response code="200">Возвращен объект с Success = true и ссылкой на привязку карты</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBindTestController.GetCardList(PaymentClassLibrary.TransactionsModels.Tinkoff.CustomerData)">
+            <summary>
+            Получение списка карт по идентификатору покупателя
+            </summary>
+            <param name="data">Данные покупателя</param>
+            <response code="200">Возвращен объект с Success = true и привязанные карты</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBindTestController.RemoveCard(PaymentClassLibrary.TransactionsModels.Tinkoff.RemoveCardData)">
+            <summary>
+            Удаление карты по идентификатору покупателя
+            </summary>
+            <param name="data">Данные для удаления карты</param>
+            <response code="200">Возвращен объект с данными карты, которые удалены</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBindTestController.InitTransfer(PaymentClassLibrary.TransactionsModels.Tinkoff.InitTransferData)">
+            <summary>
+            Инициализация выплаты
+            </summary>
+            <param name="data">Данные для инициализации платежа</param>
+            <response code="200">Возвращен объект с данными об инициализации платежа</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBindTestController.PayTransfer(PaymentClassLibrary.TransactionsModels.Tinkoff.PayTransferData)">
+            <summary>
+            Непосредственная выплата
+            </summary>
+            <param name="data"></param>
+            <response code="200">Возвращен объект с данными платежа и Success = true</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="T:PaymentApi.Controllers.TinkoffPayTestController">
+            <summary>
+            Контролер для отладки и тестов EACQ-протокола Тинькофф (оплаты и статусы транзакций)
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffPayTestController.#ctor(PaymentClassLibrary.Transport.GatewayClient)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="client">Клиент для отправки запросов</param>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffPayTestController.InitPayment(PaymentClassLibrary.TransactionsModels.Tinkoff.InitPaymentData)">
+            <summary>
+            Инициализация платежа (платежная форма, клиент вводит данные карты сам)
+            Тут важно получить PaymentId
+            </summary>
+            <param name="data">Данные платежа</param>
+            <response code="200">Возвращен объект с данными об инициализации платежа</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffPayTestController.InitRebill(PaymentClassLibrary.TransactionsModels.Tinkoff.InitRebillData)">
+            <summary>
+            Инициализация платежа на другом терминале (по RebillId карты)
+            Тут важно получить PaymentId
+            </summary>
+            <param name="data">Данные платежа</param>
+            <response code="200">Возвращен объект с данными об инициализации платежа</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffPayTestController.ChargeRebill(PaymentClassLibrary.TransactionsModels.Tinkoff.ChargeRebillData)">
+            <summary>
+            Непосредственное списание по полученным PaymentId (из InitRebill) и RebillId (GetCardList)
+            </summary>
+            <param name="data">Данные инициализированного платежа</param>
+            <response code="200">Возвращен объект с данными о платеже</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffPayTestController.GetState(PaymentClassLibrary.TransactionsModels.Tinkoff.GetStatePaymentData)">
+            <summary>
+            Получение статуса платежа по PaymentId
+            </summary>
+            <param name="data">Данные платежа</param>
+            <response code="200">Возвращен объект с данными о платеже</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffPayTestController.GetAddCardState(PaymentClassLibrary.TransactionsModels.Tinkoff.GetAddStateCardData)">
+            <summary>
+            Проверка статуса привязки карты по RequestKey
+            </summary>
+            <param name="data">Данные карты</param>
+            <response code="200">Возвращен объект с данными о привязке карты</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="T:PaymentApi.Controllers.TinkoffBankCallbackController">
+            <summary>
+            Контроллер обработки нотификаций от Тинькофф
+            <br/> Еще в работе
+            <br/> TODO: Нотификации Тинькофф
+            <br/> Доделать обработку и перенаправление запроса на основное приложение + ответ банку
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBankCallbackController.#ctor(Microsoft.Extensions.Options.IOptions{PaymentApi.Configuration.TinkoffSettings})">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="settings">Параметры из кофигурационного файла</param>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBankCallbackController.BindNotification(PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindNotification)">
+            <summary>
+            Метод для получения нотификаций по привязке карт
+            </summary>
+            <param name="notification">Модель нотификации</param>
+            <response code="200">Результат обработки запроса</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBankCallbackController.PayNotification(PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayNotification)">
+            <summary>
+            Метод для получения нотифкаций по произведенным оплатам клиентов
+            </summary>
+            <param name="notification">Модель нотификации</param>
+            <response code="200">Результат обработки запроса</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="T:PaymentApi.Controllers.TinkoffBindController">
+            <summary>
+            Контроллер для работы с Тинькофф E2C (привязки и выплаты)
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBindController.#ctor(PaymentClassLibrary.Transport.GatewayClient,Microsoft.Extensions.Options.IOptions{PaymentApi.Configuration.TinkoffSettings})">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="client">Клиент для отправки запросов</param>
+            <param name="settings">Параметры из конфигурационного файла</param>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBindController.SendRequest(PaymentClassLibrary.Utils.IModel,System.String)">
+            <summary>
+            Метод-помощник для отправки запроса, чтобы не дублировать код
+            </summary>
+            <param name="data">Модель данных</param>
+            <param name="ApiMethod">Имя метода</param>
+            <returns></returns>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBindController.AddCustomer(PaymentClassLibrary.TransactionsModels.Tinkoff.AddCustomerData)">
+            <summary>
+            Добавление покупателя в систему банка
+            </summary>
+            <remarks>Добавление покупателя в систему банка</remarks>
+            <param name="data">Данные покупателя</param>
+            <response code="200">Покупатель добавлен в систему банка</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBindController.GetCustomer(PaymentClassLibrary.TransactionsModels.Tinkoff.CustomerData)">
+            <summary>
+            Получение данных покупателя из системы банка
+            </summary>
+            <param name="data">Данные покупателя</param>
+            <response code="200">Получены данные покупателя от банка</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBindController.RemoveCustomer(PaymentClassLibrary.TransactionsModels.Tinkoff.CustomerData)">
+            <summary>
+            Удаление покупателя
+            </summary>
+            <param name="data">Данные покупателя</param>
+            <response code="200">Покупатель удален из системы банка</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBindController.AddCard(PaymentClassLibrary.TransactionsModels.Tinkoff.AddCardData)">
+            <summary>
+            Добавление карты для покупателя в систему банка
+            </summary>
+            <param name="data">Данные карты</param>
+            <response code="200">Возвращен объект с Success = true и ссылкой на привязку карты</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBindController.GetCardList(PaymentClassLibrary.TransactionsModels.Tinkoff.CustomerData)">
+            <summary>
+            Получение списка карт по идентификатору покупателя
+            </summary>
+            <param name="data">Данные покупателя</param>
+            <response code="200">Возвращен объект с Success = true и привязанные карты</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBindController.RemoveCard(PaymentClassLibrary.TransactionsModels.Tinkoff.RemoveCardData)">
+            <summary>
+            Удаление карты по идентификатору покупателя
+            </summary>
+            <param name="data">Данные для удаления карты</param>
+            <response code="200">Возвращен объект с данными карты, которые удалены</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBindController.InitTransfer(PaymentClassLibrary.TransactionsModels.Tinkoff.InitTransferData)">
+            <summary>
+            Инициализация выплаты
+            </summary>
+            <param name="data">Данные для инициализации платежа</param>
+            <response code="200">Возвращен объект с данными об инициализации платежа</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffBindController.PayTransfer(PaymentClassLibrary.TransactionsModels.Tinkoff.PayTransferData)">
+            <summary>
+            Непосредственная выплата
+            </summary>
+            <param name="data"></param>
+            <response code="200">Возвращен объект с данными платежа и Success = true</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="T:PaymentApi.Controllers.TinkoffPayController">
+            <summary>
+            Контроллер EACQ-протокола Тинькофф (оплаты и статусы транзакций)
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffPayController.#ctor(PaymentClassLibrary.Transport.GatewayClient,Microsoft.Extensions.Options.IOptions{PaymentApi.Configuration.TinkoffSettings})">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="client">Клиент для отправки запросов</param>
+            <param name="settings">Параметры из конфигурационного файла</param>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffPayController.SendRequest(PaymentClassLibrary.Utils.IModel,System.String)">
+            <summary>
+            Метод-помощник для отправки запроса, чтобы не дублировать код
+            </summary>
+            <param name="data">Модель данных</param>
+            <param name="ApiMethod">Имя метода</param>
+            <returns></returns>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffPayController.InitPayment(PaymentClassLibrary.TransactionsModels.Tinkoff.InitPaymentData)">
+            <summary>
+            Инициализация платежа (платежная форма, клиент вводит данные карты сам)
+            Тут важно получить PaymentId
+            </summary>
+            <param name="data">Данные платежа</param>
+            <response code="200">Возвращен объект с данными об инициализации платежа</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffPayController.InitRebill(PaymentClassLibrary.TransactionsModels.Tinkoff.InitRebillData)">
+            <summary>
+            Инициализация платежа на другом терминале (по RebillId карты)
+            Тут важно получить PaymentId
+            </summary>
+            <param name="data">Данные платежа</param>
+            <response code="200">Возвращен объект с данными об инициализации платежа</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffPayController.ChargeRebill(PaymentClassLibrary.TransactionsModels.Tinkoff.ChargeRebillData)">
+            <summary>
+            Непосредственное списание по полученным PaymentId (из InitRebill) и RebillId (GetCardList)
+            </summary>
+            <param name="data">Данные инициализированного платежа</param>
+            <response code="200">Возвращен объект с данными о платеже</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffPayController.GetState(PaymentClassLibrary.TransactionsModels.Tinkoff.GetStatePaymentData)">
+            <summary>
+            Получение статуса платежа по PaymentId
+            </summary>
+            <param name="data">Данные платежа</param>
+            <response code="200">Возвращен объект с данными о платеже</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="M:PaymentApi.Controllers.TinkoffPayController.GetAddCardState(PaymentClassLibrary.TransactionsModels.Tinkoff.GetAddStateCardData)">
+            <summary>
+            Проверка статуса привязки карты по RequestKey
+            </summary>
+            <param name="data">Данные карты</param>
+            <response code="200">Возвращен объект с данными о привязке карты</response>
+            <response code="400">Входные данные неверны</response>
+        </member>
+        <member name="T:PaymentApi.DbLogger.ILogRepository">
+            <summary>
+            Репозиторий для логов (от него можно создавать логи разных конфигураций)
+            </summary>
+        </member>
+        <member name="M:PaymentApi.DbLogger.ILogRepository.Log(PaymentApi.DbLogger.Log)">
+            <summary>
+            Запись в лог
+            </summary>
+            <param name="log">Объект с данными лога</param>
+        </member>
+        <member name="M:PaymentApi.DbLogger.ILogRepository.GetAll">
+            <summary>
+            Получить данные логов
+            </summary>
+            <returns>Список</returns>
+        </member>
+        <member name="M:PaymentApi.DbLogger.ILogRepository.Get(System.Int32,System.Boolean)">
+            <summary>
+            Получение определенное число записей из лога
+            </summary>
+            <param name="count">Число записей</param>
+            <param name="desc">Сортировка по убыванию</param>
+            <returns>Список записей лога</returns>
+        </member>
+        <member name="M:PaymentApi.DbLogger.ILogRepository.Remove(PaymentApi.DbLogger.Log)">
+            <summary>
+            Удалить запись из лога
+            </summary>
+            <param name="log">Объект для удаления</param>
+        </member>
+        <member name="T:PaymentApi.DbLogger.LogRepository">
+            <summary>
+            Реализация с помощью DbContext
+            </summary>
+        </member>
+        <member name="M:PaymentApi.DbLogger.LogRepository.#ctor(PaymentApi.Models.ApplicationContext)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="context">Контекст БД</param>
+        </member>
+        <member name="M:PaymentApi.DbLogger.LogRepository.Get(System.Int32,System.Boolean)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="count"><inheritdoc/></param>
+            <param name="desc"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentApi.DbLogger.LogRepository.GetAll">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentApi.DbLogger.LogRepository.Log(PaymentApi.DbLogger.Log)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="item"><inheritdoc/></param>
+        </member>
+        <member name="M:PaymentApi.DbLogger.LogRepository.Remove(PaymentApi.DbLogger.Log)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="log"><inheritdoc/></param>
+        </member>
+        <member name="T:PaymentApi.DbLogger.DbLoggerProvider">
+            <summary>
+            Провайдер для логгирования в базу данных
+            </summary>
+        </member>
+        <member name="M:PaymentApi.DbLogger.DbLoggerProvider.#ctor">
+            <summary>
+            Конструктор
+            </summary>
+        </member>
+        <member name="M:PaymentApi.DbLogger.DbLoggerProvider.CreateLogger(System.String)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="categoryName"><inheritdoc/></param>
+            <returns></returns>
+        </member>
+        <member name="M:PaymentApi.DbLogger.DbLoggerProvider.Dispose">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="T:PaymentApi.DbLogger.DbLoggerProvider.Logger">
+            <summary>
+            Логгер
+            </summary>
+        </member>
+        <member name="M:PaymentApi.DbLogger.DbLoggerProvider.Logger.#ctor(System.String,PaymentApi.DbLogger.ILogRepository)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="categoryName">Категория сообщения для лога</param>
+            <param name="repo">Репозиторий лога</param>
+        </member>
+        <member name="M:PaymentApi.DbLogger.DbLoggerProvider.Logger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="logLevel"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentApi.DbLogger.DbLoggerProvider.Logger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <typeparam name="TState"><inheritdoc/></typeparam>
+            <param name="logLevel"><inheritdoc/></param>
+            <param name="eventId"><inheritdoc/></param>
+            <param name="state"><inheritdoc/></param>
+            <param name="exception"><inheritdoc/></param>
+            <param name="formatter"><inheritdoc/></param>
+        </member>
+        <member name="M:PaymentApi.DbLogger.DbLoggerProvider.Logger.RecordMsg``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <typeparam name="TState"><inheritdoc/></typeparam>
+            <param name="logLevel"><inheritdoc/></param>
+            <param name="eventId"><inheritdoc/></param>
+            <param name="state"><inheritdoc/></param>
+            <param name="exception"><inheritdoc/></param>
+            <param name="formatter"><inheritdoc/></param>
+        </member>
+        <member name="M:PaymentApi.DbLogger.DbLoggerProvider.Logger.BeginScope``1(``0)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <typeparam name="TState"><inheritdoc/></typeparam>
+            <param name="state"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentApi.DbLogger.DbLoggerProvider.Logger.NoopDisposable">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:PaymentApi.DbLogger.DbLoggerProvider.Logger.NoopDisposable.Dispose">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="T:PaymentApi.DbLogger.Extensions.DbLoggerExtensions">
+            <summary>
+            Расширения DbLogger
+            </summary>
+        </member>
+        <member name="M:PaymentApi.DbLogger.Extensions.DbLoggerExtensions.AddDbLogger(Microsoft.Extensions.Logging.ILoggingBuilder)">
+            <summary>
+            Добавление контейнера DbLogger в сервисы
+            </summary>
+            <param name="builder">Строитель логов из сервисов приложения .NET Core</param>
+            <returns>Объект строителя</returns>
+        </member>
+        <member name="T:PaymentApi.DbLogger.Log">
+            <summary>
+            Модель логов
+            </summary>
+        </member>
+        <member name="P:PaymentApi.DbLogger.Log.Id">
+            <summary>
+            Идентификатор лога
+            </summary>
+        </member>
+        <member name="P:PaymentApi.DbLogger.Log.LogLevel">
+            <summary>
+            Уровень логгирования
+            </summary>
+        </member>
+        <member name="P:PaymentApi.DbLogger.Log.CategoryName">
+            <summary>
+            Категория исключения
+            </summary>
+        </member>
+        <member name="P:PaymentApi.DbLogger.Log.Msg">
+            <summary>
+            Сообщение
+            </summary>
+        </member>
+        <member name="P:PaymentApi.DbLogger.Log.User">
+            <summary>
+            Пользователь от которого была совершена запись в лог
+            </summary>
+        </member>
+        <member name="P:PaymentApi.DbLogger.Log.Timestamp">
+            <summary>
+            Временная метка
+            </summary>
+        </member>
+        <member name="T:PaymentApi.Middlewares.CheckIpMiddleware">
+            <summary>
+            Промежуточная обработка запроса для проверки IP-адреса
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Middlewares.CheckIpMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="next"><inheritdoc/></param>
+        </member>
+        <member name="M:PaymentApi.Middlewares.CheckIpMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext,PaymentApi.Models.ApplicationContext)">
+            <summary>
+            Метод для вызова Middleware во время запроса
+            </summary>
+            <param name="context">Контекст запроса</param>
+            <param name="appContext">Контекст БД</param>
+            <returns></returns>
+        </member>
+        <member name="T:PaymentApi.Middlewares.JwtMiddleware">
+            <summary>
+            Промежуточный обработчик для проверки JWT
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Middlewares.JwtMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Options.IOptions{PaymentApi.Configuration.AppSettings})">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="next"><inheritdoc/></param>
+            <param name="appSettings">Параметры для проверки JWT</param>
+        </member>
+        <member name="M:PaymentApi.Middlewares.JwtMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext,PaymentApi.Services.IUserService)">
+            <summary>
+            Вызов обработчика
+            </summary>
+            <param name="context">Контекст запроса</param>
+            <param name="userService">Контекст БД с данными пользователей</param>
+        </member>
+        <member name="M:PaymentApi.Middlewares.JwtMiddleware.AttachUserToContext(Microsoft.AspNetCore.Http.HttpContext,PaymentApi.Services.IUserService,System.String)">
+            <summary>
+            Метод валидации токена
+            </summary>
+            <param name="context">Контекст запроса</param>
+            <param name="userService">Контекст БД с данными пользователей</param>
+            <param name="token">Токен из блока Authorization</param>
+        </member>
+        <member name="T:PaymentApi.Middlewares.RequestLogMiddleware">
+            <summary>
+            Промежуточная обработка запроса для логирования
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Middlewares.RequestLogMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="next"><inheritdoc/></param>
+        </member>
+        <member name="M:PaymentApi.Middlewares.RequestLogMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext,PaymentApi.Models.ApplicationContext)">
+            <summary>
+            Метод для вызова Middleware во время запроса
+            </summary>
+            <param name="context">Контекст запроса</param>
+            <param name="appContext">Контекст БД</param>
+            <returns></returns>
+        </member>
+        <member name="M:PaymentApi.Middlewares.RequestLogMiddleware.LogBeforeInvoke(Microsoft.AspNetCore.Http.HttpContext,PaymentApi.DbLogger.LogRepository)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <param name="log"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PaymentApi.Middlewares.RequestLogMiddleware.LogAfterInvoke(Microsoft.AspNetCore.Http.HttpContext,PaymentApi.DbLogger.LogRepository,System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <param name="log"></param>
+            <param name="bodyResponse"></param>
+            <param name="entityId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PaymentApi.Migrations.InitialMigrations">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Migrations.InitialMigrations.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="migrationBuilder"><inheritdoc/></param>
+        </member>
+        <member name="M:PaymentApi.Migrations.InitialMigrations.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="migrationBuilder"><inheritdoc/></param>
+        </member>
+        <member name="M:PaymentApi.Migrations.InitialMigrations.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="modelBuilder"><inheritdoc/></param>
+        </member>
+        <member name="T:PaymentApi.Migrations.ApplicationContextModelSnapshot">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Migrations.ApplicationContextModelSnapshot.BuildModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="modelBuilder"><inheritdoc/></param>
+        </member>
+        <member name="T:PaymentApi.Models.ApplicationContext">
+            <summary>
+            Контекст для работы с базой данных
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Models.ApplicationContext.IpAddresses">
+            <summary>
+            Белый список IP
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Models.ApplicationContext.Logs">
+            <summary>
+            Логи
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Models.ApplicationContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions)">
+            <summary>
+            Конструктор+
+            </summary>
+            <param name="options">Параметры для создания объекта контекста</param>
+        </member>
+        <member name="M:PaymentApi.Models.ApplicationContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="modelBuilder"><inheritdoc/></param>
+        </member>
+        <member name="T:PaymentApi.Models.IpAddress">
+            <summary>
+            Модель IP из белого списка
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Models.IpAddress.Id">
+            <summary>
+            Идентификатор
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Models.IpAddress.Host">
+            <summary>
+            IP-адрес
+            </summary>
+        </member>
+        <member name="T:PaymentApi.Models.User">
+            <summary>
+            Модель пользователя, отнаследованная от Identity
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Models.User.JwtToken">
+            <summary>
+            Токен
+            </summary>
+        </member>
+        <member name="T:PaymentApi.Models.AuthenticateRequest">
+            <summary>
+            Модель запроса на аутентификацию
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Models.AuthenticateRequest.UserName">
+            <summary>
+            Имя пользователя (обязательное поле)
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Models.AuthenticateRequest.Password">
+            <summary>
+            Пароль (обязательное поле)
+            </summary>
+        </member>
+        <member name="T:PaymentApi.Models.AuthenticateResponse">
+            <summary>
+            Ответ после аутентификации
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Models.AuthenticateResponse.Id">
+            <summary>
+            Идентификатор
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Models.AuthenticateResponse.Username">
+            <summary>
+            Имя пользователя
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Models.AuthenticateResponse.Token">
+            <summary>
+            Токен JWT
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Models.AuthenticateResponse.Errors">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Models.AuthenticateResponse.#ctor(PaymentApi.Models.User)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="user">Данные пользователя</param>
+        </member>
+        <member name="M:PaymentApi.Models.AuthenticateResponse.#ctor(PaymentApi.Models.AuthenticateRequest,System.Collections.Generic.IEnumerable{Microsoft.AspNetCore.Identity.IdentityError})">
+            <summary>
+            Конструктор с ошибками
+            </summary>
+            <param name="model">Данные запроса</param>
+            <param name="errors">Полученные ошибки</param>
+        </member>
+        <member name="T:PaymentApi.Models.IdentityModels.IdentityTypeErrors">
+            <summary>
+            Типы ошибок при регистрации и авторизации пользователей
+            </summary>
+        </member>
+        <member name="F:PaymentApi.Models.IdentityModels.IdentityTypeErrors.UserNotFound">
+            <summary>
+            Пользователя не существует
+            </summary>
+        </member>
+        <member name="F:PaymentApi.Models.IdentityModels.IdentityTypeErrors.InvalidUserNameOrPassword">
+            <summary>
+            Неправильно введенные данные
+            </summary>
+        </member>
+        <member name="T:PaymentApi.Models.IdentityModels.IIdentityResponse">
+            <summary>
+            Интерфейс ответа после регистрации и авторизации
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Models.IdentityModels.IIdentityResponse.Errors">
+            <summary>
+            Ошибки полученные в результате запроса
+            </summary>
+        </member>
+        <member name="T:PaymentApi.Models.RegistrationRequest">
+            <summary>
+            Запрос регистрации
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Models.RegistrationRequest.UserName">
+            <summary>
+            Имя пользователя
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Models.RegistrationRequest.Password">
+            <summary>
+            Пароль
+            </summary>
+        </member>
+        <member name="T:PaymentApi.Models.RegistrationResponse">
+            <summary>
+            Ответ после регистрации
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Models.RegistrationResponse.Id">
+            <summary>
+            Идентификатор
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Models.RegistrationResponse.Username">
+            <summary>
+            Имя пользователя
+            </summary>
+        </member>
+        <member name="P:PaymentApi.Models.RegistrationResponse.Errors">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Models.RegistrationResponse.#ctor(PaymentApi.Models.User)">
+            <summary>
+            Конструктор успешный
+            </summary>
+            <param name="user">Данные пользователя</param>
+        </member>
+        <member name="M:PaymentApi.Models.RegistrationResponse.#ctor(PaymentApi.Models.RegistrationRequest,System.Collections.Generic.IEnumerable{Microsoft.AspNetCore.Identity.IdentityError})">
+            <summary>
+            Конструктор с ошибками
+            </summary>
+            <param name="model">Данные для регистрации</param>
+            <param name="errors">Список ошибок</param>
+        </member>
+        <member name="T:PaymentApi.Program">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Program.Main(System.String[])">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="args"><inheritdoc/></param>
+        </member>
+        <member name="M:PaymentApi.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="args"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentApi.Services.IRegisterService">
+            <summary>
+            Интерфейс контейнера регистрации
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Services.IRegisterService.Register(PaymentApi.Models.RegistrationRequest)">
+            <summary>
+            Метод записывающий в базу данные пользователей
+            </summary>
+            <param name="model">Данные пользователя</param>
+            <returns>Успешный или ошибочный <see cref="T:PaymentApi.Models.RegistrationResponse"/></returns>
+        </member>
+        <member name="T:PaymentApi.Services.IUserService">
+            <summary>
+            Интерфейс контейнера аутентификации
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Services.IUserService.Authenticate(PaymentApi.Models.AuthenticateRequest)">
+            <summary>
+            Получаем из базы данные пользователя
+            </summary>
+            <param name="model">Данные запроса на аутентификацию</param>
+            <returns>Успешный или ошибочный <see cref="T:PaymentApi.Models.AuthenticateResponse"/></returns>
+        </member>
+        <member name="M:PaymentApi.Services.IUserService.GetAll">
+            <summary>
+            Возвращает список всех пользователей
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Services.IUserService.GetById(System.String)">
+            <summary>
+            Возвращает пользователя по идентификатору
+            </summary>
+        </member>
+        <member name="T:PaymentApi.Services.RegisterService">
+            <summary>
+            Контейнер для регистрации пользователей
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Services.RegisterService.#ctor(Microsoft.AspNetCore.Identity.UserManager{PaymentApi.Models.User})">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="userManager">Контекст БД через Identity</param>
+        </member>
+        <member name="M:PaymentApi.Services.RegisterService.Register(PaymentApi.Models.RegistrationRequest)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="model"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentApi.Services.UserService">
+            <summary>
+            Репозиторий для работы пользователями из БД
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Services.UserService.#ctor(Microsoft.Extensions.Options.IOptions{PaymentApi.Configuration.AppSettings},Microsoft.AspNetCore.Identity.UserManager{PaymentApi.Models.User})">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="appSettings">Параметры приложения для создания токена</param>
+            <param name="userManager">Контекст БД</param>
+        </member>
+        <member name="M:PaymentApi.Services.UserService.Authenticate(PaymentApi.Models.AuthenticateRequest)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="model"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentApi.Services.UserService.GetAll">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Services.UserService.GetById(System.String)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Services.UserService.ErrorResponse(PaymentApi.Models.AuthenticateRequest,System.String,System.String)">
+            <summary>
+            Формирование ошибочного ответа
+            </summary>
+            <param name="model">Данные аутентификации</param>
+            <param name="code">Код ошибки</param>
+            <param name="description">Описание ошибки</param>
+            <returns></returns>
+        </member>
+        <member name="M:PaymentApi.Services.UserService.GenerateJwtToken(PaymentApi.Models.User)">
+            <summary>
+            Генерация JWT
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PaymentApi.Startup">
+            <summary>
+            Объект создаваемый при запуске приложения
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="configuration">Параметры appsettings.json</param>
+        </member>
+        <member name="P:PaymentApi.Startup.Configuration">
+            <summary>
+            Объект для конфигурирования приложения из appsettings.json
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+        </member>
+        <member name="T:PaymentApi.Utils.AuthorizeAttribute">
+            <summary>
+            Атрибут только для авторизованного доступа к методам или контроллерам
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Utils.AuthorizeAttribute.OnAuthorization(Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="context">Контекст запроса</param>
+        </member>
+        <member name="T:PaymentApi.Utils.LocalOnlyAttribute">
+            <summary>
+            Атрибут, который позволяет локально или с определенного IP вызывать методы или контроллер
+            </summary>
+        </member>
+        <member name="M:PaymentApi.Utils.LocalOnlyAttribute.OnAuthorization(Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="context">Контекст запроса</param>
+        </member>
+    </members>
+</doc>

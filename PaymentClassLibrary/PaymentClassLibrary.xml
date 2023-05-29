@@ -1,0 +1,3269 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PaymentClassLibrary</name>
+    </assembly>
+    <members>
+        <member name="T:PaymentClassLibrary.ApiUrlFactory.BankApiUrl">
+            <summary>
+            Конструктор адреса для обращения к платежному сервису
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.ApiUrlFactory.BankApiUrl.Factory">
+            <summary>
+            Объект фабрики для создания <see cref="T:PaymentClassLibrary.ApiUrlFactory.BankApiUrl"/>
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.ApiUrlFactory.BankApiUrl.#ctor(System.String)">
+            <summary>
+            Приватный конструктор
+            </summary>
+            <param name="apiUrl">Адрес API</param>
+        </member>
+        <member name="P:PaymentClassLibrary.ApiUrlFactory.BankApiUrl.ApiUrl">
+            <summary>
+            Getter API-url
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.ApiUrlFactory.BankApiUrl.BankApiUrlFactory">
+            <summary>
+            Фабрика для создания API-url
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.ApiUrlFactory.BankApiUrl.BankApiUrlFactory.GetTinkoffUrl(System.String,System.String,System.Boolean,System.Int32)">
+            <summary>
+            Метод для получения адреса Тинькофф-сервиса
+            </summary>
+            <param name="GatewayUrl">Шлюз</param>
+            <param name="ApiMethod">Метод сервиса</param>
+            <param name="IsE2C">Флаг протокола E2C</param>
+            <param name="Version">Версия протокола</param>
+            <returns>Объект адреса</returns>
+        </member>
+        <member name="M:PaymentClassLibrary.ApiUrlFactory.BankApiUrl.BankApiUrlFactory.GetAlfaBankUrl(System.String,System.Int32,System.String,System.String)">
+            <summary>
+            Метод для получения Альфа-сервиса
+            </summary>
+            <param name="GatewayUrl">Шлюз</param>
+            <param name="Version">Версия (для перевода денег 4, всё остальное 2)</param>
+            <param name="ApiMethod">Метод сервиса</param>
+            <param name="EndPointId">Идентификатор Endpoint'а</param>
+            <returns>Объект адреса</returns>
+        </member>
+        <member name="T:PaymentClassLibrary.CallbackValidators.ICallbackValidator">
+            <summary>
+            Валидатор нотификаций/callbacks
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.CallbackValidators.ICallbackValidator.ValidateSignature(PaymentClassLibrary.Utils.ITypeModel,PaymentClassLibrary.Utils.IModel,PaymentClassLibrary.Utils.IModel)">
+            <summary>
+            Метод валидации подписи нотификации
+            </summary>
+            <param name="typeModel"></param>
+            <param name="data"></param>
+            <param name="signature"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.CallbackValidators.TinkoffNotificationValidator">
+            <summary>
+            Валидатор Тинькоффских нотификаций при оплате
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.CallbackValidators.TinkoffNotificationValidator.#ctor(PaymentClassLibrary.Signature.SignatureCreators.ISignatureCreator)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="signatureCreator">Создатель (ля, как пафосно) подписи</param>
+        </member>
+        <member name="M:PaymentClassLibrary.CallbackValidators.TinkoffNotificationValidator.ValidateSignature(PaymentClassLibrary.Utils.ITypeModel,PaymentClassLibrary.Utils.IModel,PaymentClassLibrary.Utils.IModel)">
+            <summary>
+            Метод валидации подписи
+            </summary>
+            <param name="typeModel">Тип модели данных, от нее зависит способ получения данных</param>
+            <param name="data">Данные из которых будет создана подпись для сравнения с полученной подписью</param>
+            <param name="signature">Полученная подпись от источника</param>
+            <returns>Валидна или нет</returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Normalizer.IParametersNormalizer">
+            <summary>
+            Интерфейс нормализатора
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Normalizer.IParametersNormalizer.GetNormalizedParameters(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Нормализует параметры в одну строку (важно для некоторых типов запросов, например)
+            <br/>Пример тут: <seealso cref="M:PaymentClassLibrary.Transport.Requests.OAuthRequest.GetRequestDataBody"/>
+            </summary>
+            <param name="data">Данные для нормализации</param>
+            <returns>Строка запроса</returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Normalizer.SimpleNormalizerParameters">
+            <summary>
+            Нормализатор
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Normalizer.SimpleNormalizerParameters.#ctor">
+            <summary>
+            Конструктор по умолчанию
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Normalizer.SimpleNormalizerParameters.GetNormalizedParameters(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="data"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.OAuth.IOAuth">
+            <summary>
+            Возможный интерфейс OAuth
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.OAuth.IOAuth.Version">
+            <summary>
+            Версия
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.OAuth.IOAuth.GetOAuthData(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Формирование данных для OAuthRequest
+            </summary>
+            <param name="requestFields"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.OAuth.IOAuth.GetOAuthHeader(System.String)">
+            <summary>
+            Формирование заголовка OAuth c подписью
+            </summary>
+            <param name="signature">Подпись</param>
+            <returns>Готовый заголовок в виде строки который подключается в Authorization
+            <br/>Пример: <seealso cref="M:PaymentClassLibrary.Transport.Requests.OAuthRequest.GetRequestHeader"/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.OAuth.MiniOAuth1">
+            <summary>
+            Собственная реализация подготовки данных для OAuth запроса
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.OAuth.MiniOAuth1.Version">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.OAuth.MiniOAuth1.#ctor(System.String,System.String)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="consumerKey">Логин SBC</param>
+            <param name="signatureMethodName">Способ подписывания запроса</param>
+        </member>
+        <member name="M:PaymentClassLibrary.OAuth.MiniOAuth1.SetTimeStamp(System.DateTime)">
+            <summary>
+            Установка временной метки
+            </summary>
+            <param name="date">Временная метка</param>
+            <returns>Объект с проставленной временной меткой</returns>
+        </member>
+        <member name="M:PaymentClassLibrary.OAuth.MiniOAuth1.SetNonce(System.String)">
+            <summary>
+            Случайная фраза
+            </summary>
+            <param name="nonce">Случайная фраза (устанавливается с помощью <see cref="M:PaymentClassLibrary.Utils.Extensions.RandomString(System.Int32)"/></param>
+            <returns>Объект с инициализированной случайной фразой</returns>
+        </member>
+        <member name="M:PaymentClassLibrary.OAuth.MiniOAuth1.GetOAuthParameters(System.String)">
+            <summary>
+            Формирование параметров с учетом полей для OAuth
+            </summary>
+            <param name="signature">Строка с подписью</param>
+            <returns>Набор ключ-значений</returns>
+        </member>
+        <member name="M:PaymentClassLibrary.OAuth.MiniOAuth1.GetOAuthData(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Данные для тела запроса без подписи
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.OAuth.MiniOAuth1.GetOAuthHeader(System.String)">
+            <summary>
+            Данные для заголовка запроса (Authorization) с подписью
+            </summary>
+            <param name="signature"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Queries.AlfaBankQuery">
+            <summary>
+            Реализация запроса Альфа-Банка (SBC)
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.AlfaBankQuery.#ctor(PaymentClassLibrary.Signature.SignatureCreators.ISignatureCreator)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="signatureCreator"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.AlfaBankQuery.CreateRequest(PaymentClassLibrary.TransactionsModels.IPaymentTransaction)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="paymentTransaction"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.AlfaBankQuery.CreateSignature(PaymentClassLibrary.TransactionsModels.IPaymentTransaction)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="paymentTransaction"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.AlfaBankQuery.PaymentTransactionToRequest(PaymentClassLibrary.TransactionsModels.IPaymentTransaction)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="paymentTransaction"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Queries.OAuthQuery">
+            <summary>
+            OAuth реализация
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.OAuthQuery.#ctor(PaymentClassLibrary.Signature.SignatureCreators.ISignatureCreator)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="signatureCreator"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.OAuthQuery.CreateRequest(PaymentClassLibrary.TransactionsModels.IPaymentTransaction)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="paymentTransaction"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.OAuthQuery.PaymentTransactionToRequest(PaymentClassLibrary.TransactionsModels.IPaymentTransaction)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="paymentTransaction"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.OAuthQuery.CreateSignature(PaymentClassLibrary.TransactionsModels.IPaymentTransaction)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="paymentTransaction"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Queries.Query">
+            <summary>
+            Прототип запроса
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.Queries.Query.signatureCreator">
+            <summary>
+            Объект для формирования подписи
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.Query.#ctor(PaymentClassLibrary.Signature.SignatureCreators.ISignatureCreator)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="signatureCreator">Объект для формирования подписи</param>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.Query.CreateRequest(PaymentClassLibrary.TransactionsModels.IPaymentTransaction)">
+            <summary>
+            Создание объекта запроса для отправки через <see cref="T:PaymentClassLibrary.Transport.GatewayClient"/>
+            </summary>
+            <param name="paymentTransaction">Модель транзакции</param>
+            <returns></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.Query.PaymentTransactionToRequest(PaymentClassLibrary.TransactionsModels.IPaymentTransaction)">
+            <summary>
+            Метод для обработки модели транзакции в модель запроса
+            </summary>
+            <param name="paymentTransaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.Query.CreateSignature(PaymentClassLibrary.TransactionsModels.IPaymentTransaction)">
+            <summary>
+            Создание подписи
+            </summary>
+            <param name="paymentTransaction">Модель транзакции</param>
+            <returns>Модель данных с подписью, которая присоединяется к запросу</returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Queries.TinkoffBindQuery">
+            <summary>
+            Формирование запроса для транзакции с терминала E2С
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.TinkoffBindQuery.#ctor(PaymentClassLibrary.Signature.SignatureCreators.ISignatureCreator)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="signatureCreator"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.TinkoffBindQuery.CreateRequest(PaymentClassLibrary.TransactionsModels.IPaymentTransaction)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="paymentTransaction"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.TinkoffBindQuery.CreateSignature(PaymentClassLibrary.TransactionsModels.IPaymentTransaction)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="paymentTransaction"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.TinkoffBindQuery.PaymentTransactionToRequest(PaymentClassLibrary.TransactionsModels.IPaymentTransaction)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="paymentTransaction"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Queries.TinkoffPayQuery">
+            <summary>
+            Формирование запроса для транзакции с терминала EACQ
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.TinkoffPayQuery.#ctor(PaymentClassLibrary.Signature.SignatureCreators.ISignatureCreator)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="signatureCreator"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.TinkoffPayQuery.CreateRequest(PaymentClassLibrary.TransactionsModels.IPaymentTransaction)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="paymentTransaction"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.TinkoffPayQuery.CreateSignature(PaymentClassLibrary.TransactionsModels.IPaymentTransaction)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="paymentTransaction"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Queries.TinkoffPayQuery.PaymentTransactionToRequest(PaymentClassLibrary.TransactionsModels.IPaymentTransaction)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="paymentTransaction"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Signature.SignatureAttributes.JsonIgnoreForSignature">
+            <summary>
+            Аттрибут для игнорирования полей для подписи при сериализации через Json c ContractResolver'ом.
+            Надо для того, чтобы можно было сериализовать объект как с нужными полями, так и без них
+            <br/>Например <see cref="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitRebillData.Password"/>
+            <br/>Разрешается с помощью <see cref="M:PaymentClassLibrary.Transport.Requests.RequestData.RequestDataSerializer.SerializeJsonData(PaymentClassLibrary.Utils.IModel,Newtonsoft.Json.Serialization.DefaultContractResolver)"/>
+            <br/>Пример <see cref="M:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBankV2Transaction.GetRequest"/>
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.Signature.OnlySignatureFieldAttribute">
+            <summary>
+            Атрибут поля, который игнорируется при формирования подписи
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.Signature.SignatureAttribute">
+            <summary>
+            Атрибут для сортировки полей при формировании подписи в алгоритмах SBC
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.Signature.SignatureAttribute.FieldOrder">
+            <summary>
+            Номер поля по порядку
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Signature.SignatureAttribute.#ctor(System.Int32)">
+            <summary>
+            Конструктор с номером поля подписи по порядку
+            </summary>
+            <param name="fieldOrder">Порядковый номер</param>
+        </member>
+        <member name="T:PaymentClassLibrary.Signature.SignatureCreators.AlfaBankSignatureCreator">
+            <summary>
+            Создание подписи для SBC
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Signature.SignatureCreators.AlfaBankSignatureCreator.#ctor(PaymentClassLibrary.SignatureMethods.ISignatureMethod)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="signatureMethod">Метод шифрования</param>
+        </member>
+        <member name="M:PaymentClassLibrary.Signature.SignatureCreators.AlfaBankSignatureCreator.CreateSignature(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="data"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Signature.SignatureCreators.ISignatureCreator">
+            <summary>
+            Интерфейс объекта, создающего подпись из модели
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Signature.SignatureCreators.ISignatureCreator.CreateSignature(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Метод обрабатывающий данные и создающий подпись
+            </summary>
+            <param name="data">Ключи и значения для создания подписи</param>
+            <returns>Модель подписи</returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Signature.SignatureCreators.OAuthSignatureCreator">
+            <summary>
+            Создание подписи для запроса OAuth
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Signature.SignatureCreators.OAuthSignatureCreator.#ctor(PaymentClassLibrary.SignatureMethods.ISignatureMethod)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="signatureMethod">Метод шифрования</param>
+        </member>
+        <member name="M:PaymentClassLibrary.Signature.SignatureCreators.OAuthSignatureCreator.CreateSignature(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="data"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Signature.SignatureCreators.TinkoffBindSignatureCreator">
+            <summary>
+            Создание подписи для алгоритмов E2C протокола Тинькофф
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Signature.SignatureCreators.TinkoffBindSignatureCreator.#ctor(PaymentClassLibrary.SignatureMethods.ISignatureMethod,PaymentClassLibrary.SignatureMethods.ISignatureMethod)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="signatureMethod">Метод шифрования</param>
+            <param name="hashMethod">Метод хэширования</param>
+        </member>
+        <member name="M:PaymentClassLibrary.Signature.SignatureCreators.TinkoffBindSignatureCreator.CreateSignature(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="data"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Signature.SignatureCreators.TinkoffPaySignatureCreator">
+            <summary>
+            Создание подписи для алгоритмов оплат Tinkoff
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Signature.SignatureCreators.TinkoffPaySignatureCreator.#ctor(PaymentClassLibrary.SignatureMethods.ISignatureMethod)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="signatureMethod">Метод шифрования</param>
+        </member>
+        <member name="M:PaymentClassLibrary.Signature.SignatureCreators.TinkoffPaySignatureCreator.CreateSignature(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="data"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Signature.SignatureMethods.Sha256Hexadecimal">
+            <summary>
+            Реализация хэш-алгоритма SHA256 c возвратом Hexadecimal-значения подписи
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.Signature.SignatureMethods.Sha256Hexadecimal.Name">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Signature.SignatureMethods.Sha256Hexadecimal.#ctor(PaymentClassLibrary.SignatureCollectors.ICollectSignatureString)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="stringCollector">Коллектор строк</param>
+        </member>
+        <member name="M:PaymentClassLibrary.Signature.SignatureMethods.Sha256Hexadecimal.GetSignature(System.String)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="signatureBaseString"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Signature.SignatureMethods.Sha256Hexadecimal.GetSignatureBaseString(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="data"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.SignatureCollectors.ICollectSignatureString">
+            <summary>
+            Инструмент для того, чтобы объединять строки при создании подписи
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureCollectors.ICollectSignatureString.GetSignatureBaseString(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Получение «слепленной» строки из полученных данных
+            <para>
+            Пример: <see cref="M:PaymentClassLibrary.Signature.SignatureCreators.OAuthSignatureCreator.CreateSignature(System.Collections.Generic.IDictionary{System.String,System.String})"/>
+            </para>
+            </summary>
+            <param name="data">Данные, которые нужны для объединения</param>
+            <returns>Объединенная строка</returns>
+        </member>
+        <member name="T:PaymentClassLibrary.SignatureCollectors.NormalSignatureCollector">
+            <summary>
+            Простой коллектор
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureCollectors.NormalSignatureCollector.#ctor">
+            <summary>
+            Конструктор
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureCollectors.NormalSignatureCollector.GetSignatureBaseString(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="data"><inheritdoc/></param>
+            <returns></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.SignatureCollectors.OAuthSignatureCollector">
+            <summary>
+            Коллектор строк для подписи OAuth запроса
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureCollectors.OAuthSignatureCollector.#ctor(System.String,PaymentClassLibrary.Normalizer.IParametersNormalizer)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="apiUrl">Адрес отправки запроса</param>
+            <param name="normalizer">Нормализатор параметров</param>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureCollectors.OAuthSignatureCollector.GetSignatureBaseString(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="data"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.SignatureCollectors.SignatureCollectorWithSort">
+            <summary>
+            Коллектор строк для подписи с сортировкой
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureCollectors.SignatureCollectorWithSort.#ctor">
+            <summary>
+            Конструктор
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureCollectors.SignatureCollectorWithSort.GetSignatureBaseString(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="data"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.SignatureMethods.ISignatureMethod">
+            <summary>
+            Интерфейс методов шифрования
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.SignatureMethods.ISignatureMethod.Name">
+            <summary>
+            Название метода
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureMethods.ISignatureMethod.GetSignature(System.String)">
+            <summary>
+            Получение подписи
+            </summary>
+            <param name="signatureBaseString">Базовая строка из которой будет создаваться подпись</param>
+            <returns>Подпись в виде строки</returns>
+        </member>
+        <member name="T:PaymentClassLibrary.SignatureMethods.ISignatureX509">
+            <summary>
+            Интерфейс методов шифрования с использования X509 сертификатов
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.SignatureMethods.ISignatureX509.CertSerial">
+            <summary>
+            Серийный номер сертификата
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.SignatureMethods.RsaSha256">
+            <summary>
+            Метод RSA-SHA256
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.SignatureMethods.RsaSha256.Name">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureMethods.RsaSha256.#ctor(System.String,PaymentClassLibrary.SignatureCollectors.ICollectSignatureString)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="accessKey">Ключ шифрования</param>
+            <param name="stringCollector">Сборщик строк</param>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureMethods.RsaSha256.GetSignature(System.String)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="signatureBaseString"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureMethods.RsaSha256.GetSignatureBaseString(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="data"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.SignatureMethods.RsaSha256Pfx">
+            <summary>
+            Метод RSA-SHA256
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.SignatureMethods.RsaSha256Pfx.CertSerial">
+            <summary>
+            Серийный номер сертификата
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.SignatureMethods.RsaSha256Pfx.Name">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureMethods.RsaSha256Pfx.#ctor(System.String,System.String,PaymentClassLibrary.SignatureCollectors.ICollectSignatureString)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="certPath">Ключ шифрования</param>
+            <param name="password">Пароль от контейнера ключа</param>
+            <param name="stringCollector">Сборщик строк</param>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureMethods.RsaSha256Pfx.GetSignature(System.String)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="signatureBaseString"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureMethods.RsaSha256Pfx.GetSignatureBaseString(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="data"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.SignatureMethods.RsaSha256X509">
+            <summary>
+            Реализация RSA-SHA256 c извлечением сертификата из контейнера
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.SignatureMethods.RsaSha256X509.CertSerial">
+            <summary>
+            Серийный номер сертификата
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.SignatureMethods.RsaSha256X509.Name">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureMethods.RsaSha256X509.#ctor(System.String,PaymentClassLibrary.SignatureCollectors.ICollectSignatureString)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="CertSerial">Серийный номер сертификата</param>
+            <param name="stringCollector">Коллектор строк</param>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureMethods.RsaSha256X509.GetSignature(System.String)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="signatureBaseString"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureMethods.RsaSha256X509.GetSignatureBaseString(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="data"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.SignatureMethods.Sha1">
+            <summary>
+            Реализация хэш-алгоритма SHA1
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.SignatureMethods.Sha1.Name">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureMethods.Sha1.#ctor(PaymentClassLibrary.SignatureCollectors.ICollectSignatureString)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="stringCollector">Сборщик строк</param>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureMethods.Sha1.#ctor">
+            <summary>
+            Конструктор по умолчанию
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureMethods.Sha1.GetSignature(System.String)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="signatureBaseString"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureMethods.Sha1.GetSignatureBaseString(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="data"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.SignatureMethods.Sha256">
+            <summary>
+            Реализация хэш-алгоритма SHA256
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.SignatureMethods.Sha256.Name">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureMethods.Sha256.#ctor(PaymentClassLibrary.SignatureCollectors.ICollectSignatureString)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="stringCollector">Сборщик строк</param>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureMethods.Sha256.#ctor">
+            <summary>
+            Конструктор
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureMethods.Sha256.GetSignature(System.String)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="signatureBaseString"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureMethods.Sha256.GetSignatureBaseString(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="data"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.SignatureModels.AlfaBankSignature">
+            <summary>
+            Модель подписи SBC
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.SignatureModels.AlfaBankSignature.Control">
+            <summary>
+            Токен
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureModels.AlfaBankSignature.#ctor(System.String)">
+            <summary>
+            Конструктор 
+            </summary>
+            <param name="control">Control токен</param>
+        </member>
+        <member name="T:PaymentClassLibrary.SignatureModels.OAuthSignature">
+            <summary>
+            Модель подписи для OAuth
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.SignatureModels.OAuthSignature.Signature">
+            <summary>
+            Строка подписи
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureModels.OAuthSignature.#ctor(System.String)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="signature">Подпись</param>
+        </member>
+        <member name="T:PaymentClassLibrary.SignatureModels.TinkoffBindSignature">
+            <summary>
+            Модель подписи для Тинькофф E2C алгоритмов
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.SignatureModels.TinkoffBindSignature.DigestValue">
+            <summary>
+            Хэш SHA256Hexadecimal строки 
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.SignatureModels.TinkoffBindSignature.SignatureValue">
+            <summary>
+            Подпись DigestValue
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.SignatureModels.TinkoffBindSignature.CertSerial">
+            <summary>
+            Серийный номер сертификата
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureModels.TinkoffBindSignature.#ctor(System.String,System.String,PaymentClassLibrary.SignatureMethods.ISignatureMethod)">
+            <summary>
+            Конструктор 
+            </summary>
+            <param name="digestValue">Хэщ</param>
+            <param name="signature">Подпись</param>
+            <param name="signatureMethod">Метод шифрования</param>
+        </member>
+        <member name="T:PaymentClassLibrary.SignatureModels.TinkoffPaySignature">
+            <summary>
+            Подпись для оплат Тинькофф
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.SignatureModels.TinkoffPaySignature.Token">
+            <summary>
+            Токен
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureModels.TinkoffPaySignature.#ctor(System.String)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="token">Токен</param>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureModels.TinkoffPaySignature.Equals(System.Object)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="obj"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.SignatureModels.TinkoffPaySignature.GetHashCode">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankMethod">
+            <summary>
+            Список методов и фабрика для их формирования 
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankMethod.ApiMethod">
+            <summary>
+            Api метод
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankMethod.EndPointId">
+            <summary>
+            Идентификатор терминала
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankMethod.Methods">
+            <summary>
+            Фабрика методов
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankMethod.#ctor(System.String,System.String)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="apiMethod">Название метода</param>
+            <param name="endPointId">Идентификатор терминала</param>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankMethod.AlfaBankMethods">
+            <summary>
+            Класс фабрики методов
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankMethod.AlfaBankMethods.Preauth">
+            <summary>
+            Предварительная аутентификация
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankMethod.AlfaBankMethods.CardRegistration">
+            <summary>
+            Привязка карты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankMethod.AlfaBankMethods.ReturnTransaction">
+            <summary>
+            Отмена транзакции (возврат средств)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankMethod.AlfaBankMethods.TransferMoney">
+            <summary>
+            Выплата
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankMethod.AlfaBankMethods.ReccurentPayment">
+            <summary>
+            Реккурентное списание
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankMethod.AlfaBankMethods.SaleForm">
+            <summary>
+            Оплата через платежную форму
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankMethod.AlfaBankMethods.StatusTransaction(PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankMethod)">
+            <summary>
+            Метод для формирования транзакции статуса.
+            В данном случае необходимо, чтобы терминал на котором выполнялась транзакция, 
+            статус которой необходимо запросить совпадал в транзакции статуса
+            </summary>
+            <param name="method">Объект метода, статус которого необходимо запросить</param>
+            <returns>Метод статуса с определенным идентификатором терминала</returns>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankMethod.AlfaBankMethods.StatusTransaction(System.String)">
+            <summary>
+            Если короче, статус должен создаваться от той транзакции, для которой мы должны запросить статус
+            </summary>
+            <param name="apiMethod">Название метода, для которой необходимо запросить статус</param>
+            <returns>Метод статуса с определенным идентификатором терминала</returns>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankMethod.AlfaBankMethods.GetInstanceByMethodName(System.String)">
+            <summary>
+            Получение объекта метода по названию метода транзакции
+            </summary>
+            <param name="apiMethod">Название метода</param>
+            <returns>Метод транзакции с названием и терминалом</returns>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankTransaction">
+            <summary>
+            Данные для вызова методов платежного сервиса SBC
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankTransaction.#ctor(PaymentClassLibrary.Utils.IModel)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="data">Данные для запроса</param>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankTransaction.ApiUrl">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankTransaction.GetRequest">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankTransaction.GetSignatureData">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankTransaction.SetApiUrl(System.String)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="apiUrl"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.AlfaBank.AlfaBankTransaction.SetData(PaymentClassLibrary.Utils.IModel)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="data"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.AlfaBank.CardRegistrationData">
+            <summary>
+            Модель для транзакции CardRegistration (создание CardRefId после Preauth)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.CardRegistrationData.Login">
+            <summary>
+            Логин для авторизации в платежном сервисе SBC
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.CardRegistrationData.ClientOrderId">
+            <summary>
+            Идентификатор заявки в системе продавца
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.CardRegistrationData.CardRegOrderId">
+            <summary>
+            Идентификатор операции по привязке карты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.CardRegistrationData.ControlKey">
+            <summary>
+            Merchant Control Key (выдан SBC)
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData">
+            <summary>
+            Данные для предварительной тразакции (используется при оплатах и привязках карт)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.ClientOrderId">
+            <summary>
+            Идентификатор заявки в системе продавца
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.OrderDescription">
+            <summary>
+            Краткое описание покупки
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.FirstName">
+            <summary>
+            Имя покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.LastName">
+            <summary>
+            Фамилия покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.SSN">
+            <summary>
+            Страховой номер (американский вариант)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.BirthDate">
+            <summary>
+            Дата рождения покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.Address">
+            <summary>
+            Адрес покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.City">
+            <summary>
+            Город проживания покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.State">
+            <summary>
+            Регион покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.ZipCode">
+            <summary>
+            Почтовый индекс (американский вариант)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.Country">
+            <summary>
+            Страна покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.Phone">
+            <summary>
+            Номер телефона покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.CellPhone">
+            <summary>
+            Сотовый телефон покупателя 
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.Email">
+            <summary>
+            Электронная почта покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.Amount">
+            <summary>
+            Сумма холдирования
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.AmountInPeny">
+            <summary>
+            Сумма холдирования в копейках
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.Currency">
+            <summary>
+            Код валюты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.IpAddress">
+            <summary>
+            IP-адрес
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.MerchantData">
+            <summary>
+            Дополнительные данные о продавце
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.PreferredLanguage">
+            <summary>
+            Двухбуквенный код языка клиента для многоязычных платежных форм	
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.ServerCallbackUrl">
+            <summary>
+            Адрес отправки нотификации
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.RedirectUrlSuccess">
+            <summary>
+            Адрес перенаправления при успешной транзакции
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.RedirectUrlFail">
+            <summary>
+            Адрес перенаправления при неудачной транзакции
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.ControlKey">
+            <summary>
+            Ключ проверки продавца (выданный SBC)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.PreauthData.EndPointId">
+            <summary>
+            Идентификатор терминала
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.AlfaBank.ReccurentTranData">
+            <summary>
+            Данные транзакции реккурентного списания
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.ReccurentTranData.Login">
+            <summary>
+            Логин выданный SBC
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.ReccurentTranData.ClientOrderId">
+            <summary>
+            Идентификатор заявки в системе продавца
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.ReccurentTranData.CardRefId">
+            <summary>
+            Карта с которой производится списание
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.ReccurentTranData.OrderDescription">
+            <summary>
+            Описание заявки
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.ReccurentTranData.Amount">
+            <summary>
+            Сумма списания
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.ReccurentTranData.AmountInPeny">
+            <summary>
+            Сумма списания в копейках
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.ReccurentTranData.Currency">
+            <summary>
+            Код валюты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.ReccurentTranData.IpAddress">
+            <summary>
+            IP-адрес покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.ReccurentTranData.EnumAmount">
+            <summary>
+            Этот параметр может содержать несколько величин, разделенных символом ','
+            Payneteasy будет циклически просматривать суммы в списке, пытаться произвести платеж на эту сумму, 
+            пока из списка не останется больше сумм или не будет одобрен.	
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.ReccurentTranData.ServerCallbackUrl">
+            <summary>
+            Адрес отправки нотификации
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.ReccurentTranData.RedirectUrlFail">
+            <summary>
+            Адрес перенаправления (успешный)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.ReccurentTranData.RedirectUrlSuccess">
+            <summary>
+            Адрес перенаправления (неуспешный)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.ReccurentTranData.ReccurentScenario">
+            <summary>
+            Тип транзакции ребиллинга. 
+            Возможные значения: REGULAR или IRREGULAR. 
+            Если этот параметр будет отправлен в запросе, 
+            он будет иметь приоритет над тем же параметром, указанным на уровне шлюза. 
+            Используется только для конкретных эквайеров.
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.ReccurentTranData.ReccurentIniciator">
+             <summary>
+            Инициатор транзакции ребиллинга. 
+            Возможные значения: CARDHOLDER или MERCHANT. 
+            Если этот параметр будет отправлен в запросе, 
+            он будет иметь приоритет над тем же параметром, 
+            указанным на уровне шлюза. 
+            Используется только для конкретных эквайеров.	
+             </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.ReccurentTranData.ControlKey">
+            <summary>
+            Значение ключа
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.AlfaBank.RetrunTransactionData">
+            <summary>
+            Транзакция возврата средств (одно из применений возврат при холдировании средств на карте при привязке)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.RetrunTransactionData.Login">
+            <summary>
+            Логин продавца (colibridengi-sbox)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.RetrunTransactionData.ClientOrderId">
+            <summary>
+            Идентификатор заявки в сиcтеме продавца
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.RetrunTransactionData.OrderId">
+            <summary>
+            Идентификатор заявки в сиcтеме банка
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.RetrunTransactionData.Amount">
+            <summary>
+            Сумма возврата
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.RetrunTransactionData.Currency">
+            <summary>
+            Код валюты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.RetrunTransactionData.Comment">
+            <summary>
+            Комментарий
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.RetrunTransactionData.ControlKey">
+            <summary>
+            Значение ключа
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData">
+            <summary>
+            Данные для транзакции оплаты через платежную форму
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.ClientOrderId">
+            <summary>
+            Идентификатор заявки в системе продавца
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.OrderDescription">
+            <summary>
+            Описание заявки
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.FirstName">
+            <summary>
+            Имя покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.LastName">
+            <summary>
+            Фамилия покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.SSN">
+            <summary>
+            Страховой номер (американский варианты)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.BirthDate">
+            <summary>
+            Дата рождения покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.Address">
+            <summary>
+            Адрес проживания покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.City">
+            <summary>
+            Город проживания покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.State">
+            <summary>
+            Регион проживания покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.ZipCode">
+            <summary>
+            Индекс покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.Country">
+            <summary>
+            Страна
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.Phone">
+            <summary>
+            Номер телефона
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.CellPhone">
+            <summary>
+            Номер сотового телефона
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.Email">
+            <summary>
+            Электронная почта
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.Amount">
+            <summary>
+            Сумма оплаты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.AmountInPeny">
+            <summary>
+            Сумма в копейках
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.Currency">
+            <summary>
+            Валюта
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.IpAddress">
+            <summary>
+            IP-адрес
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.MerchantData">
+            <summary>
+            Дополнительные данные продавца
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.PreferredLanguage">
+            <summary>
+            Двухбуквенный код языка клиента для многоязычных платежных форм	
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.ServerCallbackUrl">
+            <summary>
+            Адрес отправки нотификации
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.RedirectUrlSuccess">
+            <summary>
+            Адрес перенаправления (успех)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.RedirectUrlFail">
+            <summary>
+            Адрес перенаправления (неуспех)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.EndPointId">
+            <summary>
+            Идентификатор терминала
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.SaleTranData.ControlKey">
+            <summary>
+            Секретный ключ выданный SBC
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.AlfaBank.StatusData">
+            <summary>
+            Данные статуса транзакции
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.StatusData.Login">
+            <summary>
+            Логин продавца (colibridengi-sbox)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.StatusData.MerchantOrderId">
+            <summary>
+            Идентификатор заявки в сиcтеме продавца
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.StatusData.OrderId">
+            <summary>
+            Идентификатор заявки в сиcтеме банка
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.StatusData.ControlKey">
+            <summary>
+            Merchant control key (1353DE81-43A1-437D-A4BA-191909E1EDBE)
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData">
+            <summary>
+            Транзакция выплаты на карту
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.Login">
+            <summary>
+            Логин продавца (colibridengi-sbox)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.MerchantOrderId">
+            <summary>
+            Идентификатор заявки в сиcтеме продавца
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.CardRefId">
+            <summary>
+            Идентификатор карты в системе банка
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.Amount">
+            <summary>
+            Сумма (в копейках)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.Currency">
+            <summary>
+            Валюта
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.IpAddress">
+            <summary>
+            IP-адрес покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.OrderDescription">
+            <summary>
+            Описание заявки
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.MerchantData">
+            <summary>
+            Дополнительные данные
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.ControlKey">
+            <summary>
+            Merchant control key (1353DE81-43A1-437D-A4BA-191909E1EDBE)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.RedirectUrlSuccess">
+            <summary>
+            URL для перенаправления пользователя после успешного совершения действия
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.RedirectUrlFail">
+            <summary>
+            URL для перенаправления пользователя после неуспешного совершения действия
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.ServerCallbackUrl">
+            <summary>
+            URL для получения callback от банка
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.FirstName">
+            <summary>
+            Имя клиента
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.MiddleName">
+            <summary>
+            Среднее имя (вариант США)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.LastName">
+            <summary>
+            Фамилия клиента
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.SSN">
+            <summary>
+            Страховой номер (американский вариант)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.BirthDate">
+            <summary>
+            Дата рождения
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.Address">
+            <summary>
+            Адрес местожительства
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.City">
+            <summary>
+            Город
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.State">
+            <summary>
+            Регион
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.ZipCode">
+            <summary>
+            Индекс
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.Country">
+            <summary>
+            Страна
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.Phone">
+            <summary>
+            Номер телефона
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.CellPhone">
+            <summary>
+            Номер сотового
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.Email">
+            <summary>
+            Электронная почта
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.Purpose">
+            <summary>
+            Назначение
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.ReceiverFirstName">
+            <summary>
+            Имя получателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.ReceiverMiddleName">
+            <summary>
+            Среднее имя получателя (вариант как в США)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.ReceiverLastName">
+            <summary>
+            Фамилия получателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.ReceiverPhone">
+            <summary>
+            Номер телефона
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.ReceiverResident">
+            <summary>
+            Является ли получатель резидентом?	
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.ReceiverDocSeries">
+            <summary>
+            Серия паспорта
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.ReceiverDocNumber">
+            <summary>
+            Номер паспорта
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.ReceiverDocId">
+            <summary>
+            21 - для паспорта РФ
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.ReceiverAddress">
+            <summary>
+            Адрес получателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.TransferCardData.ReceiverCity">
+            <summary>
+            Город получателя
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.AlfaBank.OAuthTransaction">
+            <summary>
+            OAuth-транзакция
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.AlfaBank.OAuthTransaction.ApiUrl">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.AlfaBank.OAuthTransaction.#ctor">
+            <summary>
+            Конструктор по умолчанию
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.AlfaBank.OAuthTransaction.#ctor(PaymentClassLibrary.Utils.IModel,PaymentClassLibrary.OAuth.IOAuth,PaymentClassLibrary.Normalizer.IParametersNormalizer)">
+            <summary>
+            Конструктор с данными, реализацией OAuth-авторизации и нормализатором параметров
+            </summary>
+            <param name="data">Данные</param>
+            <param name="oAuth">Реализация интерфейса OAuth</param>
+            <param name="parametersNormalizer">Нормализатор параметров</param>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.AlfaBank.OAuthTransaction.SetApiUrl(System.String)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="apiUrl"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.AlfaBank.OAuthTransaction.GetSignatureData">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.AlfaBank.OAuthTransaction.GetRequest">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.AlfaBank.OAuthTransaction.SetData(PaymentClassLibrary.Utils.IModel)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="data"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.IPaymentTransaction">
+            <summary>
+            Данные для совершения транзакций через платежные сервисы
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.IPaymentTransaction.ApiUrl">
+            <summary>
+            Адрес для отправки запроса
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.IPaymentTransaction.SetApiUrl(System.String)">
+            <summary>
+            Установка адреса для отправки запроса
+            </summary>
+            <param name="apiUrl"></param>
+            <returns>Объект с установленным адресом</returns>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.IPaymentTransaction.SetData(PaymentClassLibrary.Utils.IModel)">
+            <summary>
+            Инициализация данных для запроса
+            </summary>
+            <param name="data">Данные для инициализации</param>
+            <returns>Инициализированный данными объект транзакции</returns>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.IPaymentTransaction.GetRequest">
+            <summary>
+            Получение модели запроса для передачи в <see cref="T:PaymentClassLibrary.Transport.GatewayClient"/>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.IPaymentTransaction.GetSignatureData">
+            <summary>
+            Получение набора данных подписи запроса
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.MfoAgreementData">
+            <summary>
+            Соглашение с МФО
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.MfoAgreementData.MfoAgreement">
+            <summary>
+            Обычно передаем идентификатор клиента
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.Tinkoff.MfoAgreementData.ToString">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.PaymentPurposeDetailsData">
+            <summary>
+            Назначение платежа
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.PaymentPurposeDetailsData.PaymentPurposeDetails">
+            <summary>
+            Здесь передаем номер договора
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.Tinkoff.PaymentPurposeDetailsData.ToString">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.AddCardData">
+            <summary>
+            Привязка карты 
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.AddCardData.TerminalKey">
+            <summary>
+            Терминал
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.AddCardData.CustomerKey">
+            <summary>
+            Идентификатор клиента
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.AddCardData.CheckType">
+            <summary>
+            Тип привязки (NO/HOLD/3DS/3DSHOLD)
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.AddCustomerData">
+            <summary>
+            Добавление клиента
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.AddCustomerData.TerminalKey">
+            <summary>
+            Терминал
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.AddCustomerData.CustomerKey">
+            <summary>
+            Идентификатор клиента
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.AddCustomerData.Email">
+            <summary>
+            Почта
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.AddCustomerData.Phone">
+            <summary>
+            Телефон
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.CustomerData">
+            <summary>
+            Получение данных клиента
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.CustomerData.TerminalKey">
+            <summary>
+            Терминал
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.CustomerData.CustomerKey">
+            <summary>
+            Идентификатор клиента
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.InitTransferData">
+            <summary>
+            Инициализация выплаты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitTransferData.TerminalKey">
+            <summary>
+            Терминал
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitTransferData.OrderId">
+            <summary>
+            Идентификатор заявки
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitTransferData.Amount">
+            <summary>
+            Сумма выплаты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitTransferData.AmountInPeny">
+            <summary>
+            Сумма в копейках
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitTransferData.CardId">
+            <summary>
+            Идентификатор карты, для выплаты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitTransferData.DATA">
+            <summary>
+            Дополнительные данные
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.PayTransferData">
+            <summary>
+            Совершение выплаты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.PayTransferData.TerminalKey">
+            <summary>
+            Терминал
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.PayTransferData.PaymentId">
+            <summary>
+            Идентификатор платежа
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.RemoveCardData">
+            <summary>
+            Удаление карты из системы банка (в банке карта помечается «D»)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.RemoveCardData.TerminalKey">
+            <summary>
+            Идентификатор терминала
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.RemoveCardData.CustomerKey">
+            <summary>
+            Идентификатор клиента
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.RemoveCardData.CardId">
+            <summary>
+            Идентификатор карты в системе банка
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.AddCardResultData">
+            <summary>
+            Результат запроса добавления карты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.AddCardResultData.CustomerKey">
+            <summary>
+            Идентификатор покупателя в системе Продавца
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.AddCardResultData.PaymentUrl">
+            <summary>
+            Ссылка на страницу привязки карты. На данную страницу необходимо переадресовать клиента для привязки карты (для метода AddCard)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.AddCardResultData.RequestKey">
+            <summary>
+            Идентификатор транзакции привязки карты (ключ запроса)
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.AddCustomerResultData">
+            <summary>
+            Результат добавления покупателя в систему банка
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.AddCustomerResultData.CustomerKey">
+            <summary>
+            Идентификатор покупателя в системе Продавца
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.GetCardListResultData">
+            <summary>
+            Результат запроса получения списка карт
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.GetCardListResultData.CustomerKey">
+            <summary>
+            Идентификатор покупателя в системе Продавца
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.GetCardListResultData.Cards">
+            <summary>
+            Список карт клиента
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.GetCustomerResultData">
+            <summary>
+            Результат запроса данных клиента
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.GetCustomerResultData.CustomerKey">
+            <summary>
+            Идентификатор покупателя в системе Продавца
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.GetCustomerResultData.Email">
+            <summary>
+            Электронная почта покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.GetCustomerResultData.Phone">
+            <summary>
+            Номер телеофна покупателя
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.InitTransferResultData">
+            <summary>
+            Результат запроса инициализации платежа
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitTransferResultData.Status">
+            <summary>
+            Статус транзакции
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitTransferResultData.PaymentId">
+            <summary>
+            Уникальный идентификатор транзакции в системе Банка 
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitTransferResultData.OrderId">
+            <summary>
+            Идентификатор заявки
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitTransferResultData.Amount">
+            <summary>
+            Сумма в копейках
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.PayTransferResultData">
+            <summary>
+            Результат запроса выплаты на карту
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.PayTransferResultData.Status">
+            <summary>
+            Статус транзакции
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.PayTransferResultData.PaymentId">
+            <summary>
+            Уникальный идентификатор транзакции в системе Банка 
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.PayTransferResultData.OrderId">
+            <summary>
+            Идентификатор заявки
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.RemoveCardResultData">
+            <summary>
+            Результат удаления карты из системы банка
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.RemoveCardResultData.CustomerKey">
+            <summary>
+            Идентификатор покупателя в системе Продавца
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.RemoveCardResultData.Status">
+            <summary>
+            Статус карты: A – активная, I – не активная, E – срок действия карты истек, D - удаленная
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.RemoveCardResultData.CardType">
+            <summary>
+            Тип карты: 0 - карта списания; 1 - карта пополнения; 2 - карта пополнения и списания
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.RemoveCardResultData.CardId">
+            <summary>
+            Идентификатор карты в системе Банка
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.RemoveCustomerResultData">
+            <summary>
+            Результат удаления покупателя из системы банка
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.RemoveCustomerResultData.CustomerKey">
+            <summary>
+            Идентификатор покупателя в системе Продавца
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffCustomerCard">
+            <summary>
+            Данные карты покупателя
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffCustomerCard.CardId">
+            <summary>
+            Идентификатор карты в системе Банка
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffCustomerCard.Pan">
+            <summary>
+            Номер карты 411111******1111
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffCustomerCard.Status">
+            <summary>
+            Статус карты: A – активная, I – не активная, E – срок действия карты истек, D - удаленная
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffCustomerCard.RebillId">
+            <summary>
+            Идентификатор рекуррентного платежа
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffCustomerCard.CardType">
+            <summary>
+            Тип карты: 0 - карта списания; 1 - карта пополнения; 2 - карта пополнения и списания
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffCustomerCard.ExpDate">
+            <summary>
+            Срок действия карты
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.ChargeRebillData">
+            <summary>
+            Операция списания по идентификатору платежа
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.ChargeRebillData.RebillId">
+            <summary>
+            Платежный идентификатор карты из GetCardList
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.ChargeRebillData.PaymentId">
+            <summary>
+            Идентификатор платежа
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.ChargeRebillData.TerminalKey">
+            <summary>
+            Идентификатор терминала
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.ChargeRebillData.Password">
+            <summary>
+            Пароль для доступа к терминалу
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.GetAddStateCardData">
+            <summary>
+            Операция получения статуса привязки карты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.GetAddStateCardData.RequestKey">
+            <summary>
+            Ключ запроса на привязку карты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.GetAddStateCardData.TerminalKey">
+            <summary>
+            Идентификатор терминала
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.GetAddStateCardData.Password">
+            <summary>
+            Пароль терминала
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.GetStatePaymentData">
+            <summary>
+            Получение статуса платежа
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.GetStatePaymentData.PaymentId">
+            <summary>
+            Идентификатор платежа
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.GetStatePaymentData.TerminalKey">
+            <summary>
+            Идентификатор терминала
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.GetStatePaymentData.Password">
+            <summary>
+            Пароль для доступа к терминалу
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.InitPaymentData">
+            <summary>
+            Инициализация платежа через платежную форму
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitPaymentData.OrderId">
+            <summary>
+            Идентификатор заявки
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitPaymentData.PayForm">
+            <summary>
+            Для использования комиссии сверху необходимо передать значение «mfo» 
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitPaymentData.PayType">
+            <summary>
+            Определяет тип проведения платежа –
+            двухстадийная или одностадийная оплата.
+            − "O" - одностадийная оплата;
+            − "T"- двухстадийная оплата
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitPaymentData.TerminalKey">
+            <summary>
+            Идентификатор терминала
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitPaymentData.Password">
+            <summary>
+            Пароль от терминала
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitPaymentData.Amount">
+            <summary>
+            Сумма
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitPaymentData.AmountInPeny">
+            <summary>
+            Сумма в копейках
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitPaymentData.DATA">
+            <summary>
+            Дополнительные данные
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.InitRebillData">
+            <summary>
+            Инициализация реккурентного списания
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitRebillData.OrderId">
+            <summary>
+            Идентификатор заявки
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitRebillData.CustomerKey">
+            <summary>
+            Идентификатор клиента
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitRebillData.PayType">
+            <summary>
+            Определяет тип проведения платежа –
+            двухстадийная или одностадийная оплата.
+            − "O" - одностадийная оплата;
+            − "T"- двухстадийная оплата
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitRebillData.TerminalKey">
+            <summary>
+            Идентификатор терминала
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitRebillData.Password">
+            <summary>
+            Пароль от терминала
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitRebillData.Amount">
+            <summary>
+            Сумма платежа
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitRebillData.AmountInPeny">
+            <summary>
+            Сумма в копейках
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitRebillData.DATA">
+            <summary>
+            Дополнительные данные
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.ChargeRebillResultData">
+            <summary>
+            Результат реккурентного списания
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.ChargeRebillResultData.Status">
+            <summary>
+            Статус платежа
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.ChargeRebillResultData.PaymentId">
+            <summary>
+            Идентификатор платежа в системе банка
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.ChargeRebillResultData.OrderId">
+            <summary>
+            Идентификатор заявка в системе продавца
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.ChargeRebillResultData.Amount">
+            <summary>
+            Сумма платежа в копейках
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.GetAddCardStateResultData">
+            <summary>
+            Результат состояния привязки карты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.GetAddCardStateResultData.RequestKey">
+            <summary>
+            Ключ запроса на привязку карты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.GetAddCardStateResultData.Status">
+            <summary>
+            Статус привязки
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.GetStateResultData">
+            <summary>
+            Результат состояния платежа
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.GetStateResultData.Status">
+            <summary>
+            Статус платежа
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.GetStateResultData.PaymentId">
+            <summary>
+            Идентификатор платежа в системе банка
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.GetStateResultData.OrderId">
+            <summary>
+            Идентификатор заявка в системе продавца
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.GetStateResultData.Amount">
+            <summary>
+            Сумма платежа в копейках
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.GetStateResultData.Params">
+            <summary>
+            Параметры платежа
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.InitPaymentResultData">
+            <summary>
+            Результат инициализации оплаты через платежную форму
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitPaymentResultData.OrderId">
+            <summary>
+            Идентификатор заявки в системе Продавца
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitPaymentResultData.PaymentUrl">
+            <summary>
+            Ссылка на страницу оплаты. На данную страницу необходимо переадресовать клиента для оплаты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitPaymentResultData.PaymentId">
+            <summary>
+            Идентификатор платежа в системе банка
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitPaymentResultData.Status">
+            <summary>
+            Статус платежа
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitPaymentResultData.Amount">
+            <summary>
+            Сумма в копейках
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.InitRebillResultData">
+            <summary>
+            Результат инициализации реккурента
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitRebillResultData.OrderId">
+            <summary>
+            Идентификатор заявки в системе Продавца
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitRebillResultData.PaymentUrl">
+            <summary>
+            Ссылка на страницу оплаты. На данную страницу необходимо переадресовать клиента для оплаты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitRebillResultData.PaymentId">
+            <summary>
+            Идентификатор платежа в системе банка
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitRebillResultData.Status">
+            <summary>
+            Статус платежа
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.InitRebillResultData.Amount">
+            <summary>
+            Сумма в копейках
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffResultData">
+            <summary>
+            Общий объект ответов от Тинькофф
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffResultData.Success">
+            <summary>
+            Успешность операции
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffResultData.ErrorCode">
+            <summary>
+            Код ошибки, «0» в случае успеха
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffResultData.Message">
+            <summary>
+            Сообщение
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffResultData.Details">
+            <summary>
+            Детали ошибки
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffResultData.TerminalKey">
+            <summary>
+            Платежный ключ, выдается Продавцу при заведении терминала
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindNotification">
+            <summary>
+            Данные нотификации по протоколу E2C
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindNotification.TerminalKey">
+            <summary>
+            Терминал
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindNotification.CustomerKey">
+            <summary>
+            Покупатель
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindNotification.RequestKey">
+            <summary>
+            Идентификатор привязки
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindNotification.Success">
+            <summary>
+            Параметр успешности запроса
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindNotification.Status">
+            <summary>
+            Статус транзакции
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindNotification.PaymentId">
+            <summary>
+            Идентификатор оплаты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindNotification.ErrorCode">
+            <summary>
+            Код ошибки
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindNotification.CardId">
+            <summary>
+            Идентификатор карты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindNotification.Pan">
+            <summary>
+            Первые и последние 4 цифры карты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindNotification.ExpDate">
+            <summary>
+            Дата истечения срока действия
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindNotification.NotificationType">
+            <summary>
+            Тип нотификации
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayNotification">
+            <summary>
+            Нотификации по оплатам
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayNotification.CardId">
+            <summary>
+            Идентификатор карты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayNotification.Pan">
+            <summary>
+            Первые и последние 4 цифры карты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayNotification.ExpDate">
+            <summary>
+            Срок действия карты
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayNotification.TerminalKey">
+            <summary>
+            Терминал
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayNotification.Amount">
+            <summary>
+            Сумма
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayNotification.OrderId">
+            <summary>
+            Идентификатор заявки
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayNotification.Success">
+            <summary>
+            Успешность операции (приходит капсом, поэтому поле игнорируется при создании токена)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayNotification.SuccessLower">
+            <summary>
+            Успешность (в нижнем регистре для создания токена)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayNotification.Status">
+            <summary>
+            Статус операции
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayNotification.PaymentId">
+            <summary>
+            Идентификатор платежа
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayNotification.ErrorCode">
+            <summary>
+            Код ошибки
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayNotification.Password">
+            <summary>
+            Пароль для доступа к терминалу
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayNotification.Token">
+            <summary>
+            Токен (подпись)
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayNotification.GetTinkoffPaySignature">
+            <summary>
+            Создание объекта подписи из нотификации
+            </summary>
+            <returns>Подпись TinkoffPay</returns>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindMethods">
+            <summary>
+            Названия методов протокола E2C
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindMethods.InitTransfer">
+            <summary>
+            Инициализация перевода
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindMethods.PayTransfer">
+            <summary>
+            Совершение перевода после инициализации
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindMethods.AddCustomer">
+            <summary>
+            Добавление покупателя в систему банка
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindMethods.GetCustomer">
+            <summary>
+            Получение данных покупателя
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindMethods.RemoveCustomer">
+            <summary>
+            Удаление покупателя из системы банка
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindMethods.GetCardList">
+            <summary>
+            Получение списка привязанных карт клиента
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindMethods.AddCard">
+            <summary>
+            Инциализация привязки карты клиента
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBindMethods.RemoveCard">
+            <summary>
+            Удаление карты из системы банка
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayMethods">
+            <summary>
+            Названия методов протокола EACQ
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayMethods.InitPayment">
+            <summary>
+            Инициализация платежа через платежную форму
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayMethods.InitRebill">
+            <summary>
+            Инициализация реккурента
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayMethods.ChargeRebill">
+            <summary>
+            Исполнение реккурентного списания
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayMethods.GetState">
+            <summary>
+            Запрос статуса платежа
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffPayMethods.GetAddCardState">
+            <summary>
+            Запрос статуса привязки карты
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBankTransaction">
+            <summary>
+            Первая версия транзакции Тинькофф (Передача UrlEncoded)
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBankTransaction.#ctor(PaymentClassLibrary.Utils.IModel)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="data">Данные</param>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBankTransaction.ApiUrl">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBankTransaction.GetRequest">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBankTransaction.GetSignatureData">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBankTransaction.SetApiUrl(System.String)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="apiUrl"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBankTransaction.SetData(PaymentClassLibrary.Utils.IModel)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="data"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBankV2Transaction">
+            <summary>
+            Вторая версия транзакции с передачей параметров Json
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBankV2Transaction.#ctor(PaymentClassLibrary.Utils.IModel)">
+            <summary>
+            Конструктор 
+            </summary>
+            <param name="data">Данные для совершения транзакции</param>
+        </member>
+        <member name="P:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBankV2Transaction.ApiUrl">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBankV2Transaction.GetRequest">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBankV2Transaction.GetSignatureData">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBankV2Transaction.SetApiUrl(System.String)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="apiUrl"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffBankV2Transaction.SetData(PaymentClassLibrary.Utils.IModel)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="data"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffTransactionFactory">
+            <summary>
+            Фабрика транзакций Тинькофф
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.TransactionsModels.Tinkoff.TinkoffTransactionFactory.GetTinkoffTransactionByVersion(System.Int32)">
+            <summary>
+            Метод для получение объекта транзакции по версии
+            </summary>
+            <param name="Version">Версия</param>
+            <returns>Объект транзакции</returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Transport.GatewayClient">
+            <summary>
+            Клиент для отправки запрсоов
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.GatewayClient.#ctor">
+            <summary>
+            Конструктор
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.GatewayClient.MakeRequest``1(PaymentClassLibrary.Transport.Requests.IRequest)">
+            <summary>
+            Создание, валидация, отправка и обработка запроса
+            </summary>
+            <param name="request">Объект с данными запроса</param>
+            <returns>Готовый Response</returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.GatewayClient.ValidateRequest(PaymentClassLibrary.Transport.Requests.IRequest)">
+            <summary>
+            Валидация модели запроса
+            </summary>
+            <param name="request">Модель запроса</param>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.GatewayClient.SendRequest``1(PaymentClassLibrary.Transport.Requests.IRequest,``0)">
+            <summary>
+            Отправка запроса
+            </summary>
+            <param name="preparedRequestData">Подготовленные данные</param>
+            <param name="response">Объект ответа</param>
+            <returns>Инициализированный объект ответа</returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Transport.Requests.IRequest">
+            <summary>
+            Интерфейс запроса
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.IRequest.SetSignature(PaymentClassLibrary.Utils.IModel)">
+            <summary>
+            Инициализация подписи в запросе
+            </summary>
+            <param name="signature">Модель подписи</param>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.IRequest.SetApiUrl(System.String)">
+            <summary>
+            Инициализация адреса отправки запроса
+            </summary>
+            <param name="apiUrl">Адрес отправки запроса</param>
+            <returns>Объект с установленным адресом</returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.IRequest.GetApiUrl">
+            <summary>
+            Получение API-url
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.IRequest.GetRequestDataBody">
+            <summary>
+            Получение данных запроса в виде строки
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.IRequest.GetRequestHeader">
+            <summary>
+            Получение заголовка запроса
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.IRequest.GetContentType">
+            <summary>
+            Тип контента для запроса
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.Transport.Requests.JsonRequest">
+            <summary>
+            Запрос с данными в виде Json
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.JsonRequest.#ctor(PaymentClassLibrary.Transport.Requests.RequestData)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="requestData"></param>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.JsonRequest.GetApiUrl">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.JsonRequest.GetContentType">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.JsonRequest.GetRequestDataBody">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.JsonRequest.GetRequestHeader">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.JsonRequest.SetApiUrl(System.String)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="apiUrl"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.JsonRequest.SetSignature(PaymentClassLibrary.Utils.IModel)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="signature"><inheritdoc/></param>
+        </member>
+        <member name="T:PaymentClassLibrary.Transport.Requests.OAuthRequest">
+            <summary>
+            Класс для формирования данных для запроса OAuth
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.OAuthRequest.#ctor(System.Collections.Generic.IDictionary{System.String,System.String},PaymentClassLibrary.OAuth.IOAuth,PaymentClassLibrary.Normalizer.IParametersNormalizer,System.String)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="requestFields">Данные для запроса</param>
+            <param name="miniOAuth">Объект OAuth</param>
+            <param name="parametersNormalizer">Нормализатор для параметров</param>
+            <param name="contentType">Тип контента (по умолчанию UrlEncoded)</param>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.OAuthRequest.GetApiUrl">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.OAuthRequest.GetRequestDataBody">
+            <summary>
+            //Параметры OAuth, без подписи со всеми полями данных
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.OAuthRequest.SetApiUrl(System.String)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="apiUrl"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.OAuthRequest.GetRequestHeader">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.OAuthRequest.SetSignature(PaymentClassLibrary.Utils.IModel)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="signature"><inheritdoc/></param>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.OAuthRequest.GetContentType">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Transport.Requests.RequestData">
+            <summary>
+            Данные для запроса
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.Transport.Requests.RequestData.RequestString">
+            <summary>
+            Строка с данными
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.Transport.Requests.RequestData.ContentType">
+            <summary>
+            Тип контента (<see cref="T:PaymentClassLibrary.Utils.UserMimeType"/>)
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.Transport.Requests.RequestData.Serializer">
+            <summary>
+            Сериализатор
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.Transport.Requests.RequestData.Deserializer">
+            <summary>
+            Десериализатор
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.RequestData.#ctor(System.String,System.String)">
+            <summary>
+            Приватный конструктор для создания объекта только в фабриках
+            </summary>
+            <param name="requestString"></param>
+            <param name="contentType"></param>
+        </member>
+        <member name="T:PaymentClassLibrary.Transport.Requests.RequestData.RequestDataSerializer">
+            <summary>
+            Класс фабрики сериализатора
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.RequestData.RequestDataSerializer.SerializeUrlEncodedData(PaymentClassLibrary.Utils.IModel,PaymentClassLibrary.Utils.ITypeModel)">
+            <summary>
+            Сериализация объекта в UrlEncode
+            </summary>
+            <param name="data">Данные</param>
+            <param name="dataBrowser">Тип модели</param>
+            <returns>Объект с данными для запроса и типом контента</returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.RequestData.RequestDataSerializer.SerializeUrlEncodedData(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Сериализация в UrlEncode из Dictionary
+            </summary>
+            <param name="data">Данные</param>
+            <returns>Объект с данными для запроса и типом контента</returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.RequestData.RequestDataSerializer.SerializeJsonData(PaymentClassLibrary.Utils.IModel,Newtonsoft.Json.Serialization.DefaultContractResolver)">
+            <summary>
+            Сериализатор Json
+            </summary>
+            <param name="data">Данные</param>
+            <param name="resolver">Кастомные правила для сериализации</param>
+            <returns>Объект с данными для запроса и типом контента</returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.RequestData.RequestDataSerializer.SerializeJsonData(Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            Сериализатор Json из JObject
+            </summary>
+            <param name="jobj">Объект JObject</param>
+            <returns>Объект с данными для запроса и типом контента</returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Transport.Requests.RequestData.RequestDataDeserializer">
+            <summary>
+            Десериализатор
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.RequestData.RequestDataDeserializer.DeserializeJson(PaymentClassLibrary.Transport.Requests.RequestData)">
+            <summary>
+            Десериализация Json в JObject
+            </summary>
+            <param name="data">Данные запроса</param>
+            <returns>Объект JObject</returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.RequestData.RequestDataDeserializer.DeserializeUrlEncodedString(PaymentClassLibrary.Transport.Requests.RequestData)">
+            <summary>
+            Десериализация в Dictionary UrlEncode
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Transport.Requests.UrlEncodeRequest">
+            <summary>
+            Реализация UrlEncoded запроса
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.UrlEncodeRequest.#ctor(PaymentClassLibrary.Transport.Requests.RequestData)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="requestData"></param>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.UrlEncodeRequest.GetApiUrl">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.UrlEncodeRequest.GetContentType">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.UrlEncodeRequest.GetRequestDataBody">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.UrlEncodeRequest.GetRequestHeader">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.UrlEncodeRequest.SetApiUrl(System.String)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="apiUrl"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Requests.UrlEncodeRequest.SetSignature(PaymentClassLibrary.Utils.IModel)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="signature"><inheritdoc/></param>
+        </member>
+        <member name="T:PaymentClassLibrary.Transport.Responses.AlfaBankResponse">
+            <summary>
+            Обработчик ответа от платежных сервисов (пока только для Json)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.Transport.Responses.AlfaBankResponse.ResponseString">
+            <summary>
+            Строка ответа
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.Transport.Responses.AlfaBankResponse.Code">
+            <summary>
+            Код ответа от сервера
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Responses.AlfaBankResponse.#ctor">
+            <summary>
+            Конструктор
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Responses.AlfaBankResponse.#ctor(System.String,System.Net.HttpStatusCode)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="responseString">строка ответа</param>
+            <param name="code">Код ответа</param>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Responses.AlfaBankResponse.InitializeResponse(System.Net.HttpStatusCode,System.String)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="code"><inheritdoc/></param>
+            <param name="message"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Transport.Responses.IResponse">
+            <summary>
+            Интерфейс ответа
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.Transport.Responses.IResponse.ResponseString">
+            <summary>
+            Строка ответа
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.Transport.Responses.IResponse.Code">
+            <summary>
+            Код ответа от сервера
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Responses.IResponse.InitializeResponse(System.Net.HttpStatusCode,System.String)">
+            <summary>
+            Инициализация объекта из реализации HTTP-ответа клиента
+            </summary>
+            <param name="code">Код ответа сервера</param>
+            <param name="message">Данные ответа</param>
+            <returns></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Transport.Responses.TinkoffResponse">
+            <summary>
+            Обработчик ответа от платежных сервисов (пока только для Json)
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.Transport.Responses.TinkoffResponse.ResponseString">
+            <summary>
+            Строка ответа
+            </summary>
+        </member>
+        <member name="P:PaymentClassLibrary.Transport.Responses.TinkoffResponse.Code">
+            <summary>
+            Код ответа от сервера
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Responses.TinkoffResponse.#ctor">
+            <summary>
+            Конструктор
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Responses.TinkoffResponse.#ctor(System.String,System.Net.HttpStatusCode)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="responseString">строка ответа</param>
+            <param name="code">Код ответа</param>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Responses.TinkoffResponse.GetResult``1(System.Boolean)">
+            <summary>
+            Получение десериализованного объекта ответа
+            </summary>
+            <typeparam name="T">Тип объекта в случае успешно выполненного запроса</typeparam>
+            <param name="dictAsArray">Флаг получения сериализованного объекта в Dictionary</param>
+            <returns>Объект с ответными данными</returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Transport.Responses.TinkoffResponse.InitializeResponse(System.Net.HttpStatusCode,System.String)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="code"><inheritdoc/></param>
+            <param name="message"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Utils.DictionaryAsArrayResolver">
+            <summary>
+            Кастомное правило десериализации: необходим для того, чтобы в тексте Json, внутренний объект был десериализован в Dictionary
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Utils.DictionaryAsArrayResolver.CreateContract(System.Type)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="objectType"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Utils.CustomContractResolvers.ExcluderPropertiesResolver`1">
+            <summary>
+            Кастомное правило для исключения некоторых полей с определенным атрибутом при сериализации или десериализации Json
+            </summary>
+            <typeparam name="T">Тип аттрибута</typeparam>
+        </member>
+        <member name="M:PaymentClassLibrary.Utils.CustomContractResolvers.ExcluderPropertiesResolver`1.#ctor">
+            <summary>
+            Конструктор
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Utils.CustomContractResolvers.ExcluderPropertiesResolver`1.GetSerializableMembers(System.Type)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="objectType"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Utils.DataBrowser">
+            <summary>
+            Старый способ сериализации данных в Dictionary (пока используется в OAuth, надо отрефакторить)
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Utils.DataBrowser.#ctor(System.Collections.Generic.List{PaymentClassLibrary.Utils.IModel})">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="M:PaymentClassLibrary.Utils.DataBrowser.GetData(PaymentClassLibrary.Utils.ITypeModel)">
+            <summary>
+            Сериализация с помощью ITypeModel
+            </summary>
+            <param name="typeModel">Тип модели</param>
+            <returns>Сериализованный Dictionary</returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Utils.Extensions">
+            <summary>
+            Некоторые расширения
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Utils.Extensions.RandomString(System.Int32)">
+            <summary>
+            Генерация случайной строки
+            </summary>
+            <param name="length">Длина</param>
+            <returns>Случайная строка</returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Utils.Extensions.ToNameValueCollection``2(System.Collections.Generic.IDictionary{``0,``1})">
+            <summary>
+            Получение из Dictionary NameValueCollection
+            </summary>
+            <typeparam name="TKey">Тип ключ</typeparam>
+            <typeparam name="TValue">Тип значение</typeparam>
+            <param name="dict">Объект Dictionary</param>
+            <returns>Объект NameValueCollection</returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Utils.Extensions.ToSortedDictionary(System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Получение из NameValueCollection SortedDictionary
+            </summary>
+            <param name="nvc">Объект NameValueCollection</param>
+            <returns>SortedDictionary</returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Utils.Extensions.ToDictionary(System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Получение из NameValueCollection Dictionary
+            </summary>
+            <param name="nvc">Объект NameValueCollection</param>
+            <returns>Dictionary</returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Utils.Extensions.ToQueryString(System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Из NameValueCollection QueryString (обратная операция от <see cref="M:System.Web.HttpUtility.ParseQueryString(System.String)"/>)
+            </summary>
+            <param name="nvc">Объект NameValueCollection</param>
+            <returns>Строка UrlEncoded</returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Utils.IModel">
+            <summary>
+            Общая модель (возможно в какой-то степени костыль)
+            </summary>
+        </member>
+        <member name="T:PaymentClassLibrary.Utils.ITypeModel">
+            <summary>
+            Интерфейс типа модели
+            <br/>По сути способ сериализации модели в Dictionary, чтобы его обработать и «запихать» в запрос
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Utils.ITypeModel.GetData(PaymentClassLibrary.Utils.IModel)">
+            <summary>
+            Метод для получения списка ключ-значение для обработки 
+            </summary>
+            <param name="model">Модель данных</param>
+            <returns>Сериализованные данные в IDictionary</returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Utils.TypeModels.AlfaBankSignatureDefinition">
+            <summary>
+            Модель для подписи SBC
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Utils.TypeModels.AlfaBankSignatureDefinition.GetData(PaymentClassLibrary.Utils.IModel)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="model"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Utils.TypeModels.StandartModel">
+            <summary>
+            Стандартная модель, используется во всех остальных случаях, кроме кастомных определенных для Тинькофф и SBC
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Utils.TypeModels.StandartModel.GetData(PaymentClassLibrary.Utils.IModel)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="model"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Utils.TypeModels.TinkoffModel">
+            <summary>
+            Модель Тинькофф первой версии, которая десериализуется в UrlEncoded
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Utils.TypeModels.TinkoffModel.GetData(PaymentClassLibrary.Utils.IModel)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="model"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:PaymentClassLibrary.Utils.TypeModels.TinkoffModel.GetJsonPropAttribute(System.Object,System.String)">
+            <summary>
+            Получение переопределнное название поля, которое описано в JsonProperty
+            </summary>
+            <param name="obj">Объект модели данных</param>
+            <param name="nameProperty">Название свойства</param>
+            <returns>Название из JsonProperty</returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Utils.TypeModels.Tinkoff.TinkoffModelFactory">
+            <summary>
+            Фабрика для получения модели определенной версии
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Utils.TypeModels.Tinkoff.TinkoffModelFactory.GetTinkoffModelByVersion(System.Int32)">
+            <summary>
+            Получение модели по версии
+            </summary>
+            <param name="Version">Версия</param>
+            <returns>Тип модели</returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Utils.TypeModels.TinkoffV2Model">
+            <summary>
+            Модель Тинькофф второй версии (v2)
+            </summary>
+        </member>
+        <member name="M:PaymentClassLibrary.Utils.TypeModels.TinkoffV2Model.GetData(PaymentClassLibrary.Utils.IModel)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="model"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:PaymentClassLibrary.Utils.UserMimeType">
+            <summary>
+            Типы контента
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.Utils.UserMimeType.Json">
+            <summary>
+            Json
+            </summary>
+        </member>
+        <member name="F:PaymentClassLibrary.Utils.UserMimeType.UrlEncoded">
+            <summary>
+            UrlEncoded
+            </summary>
+        </member>
+    </members>
+</doc>
